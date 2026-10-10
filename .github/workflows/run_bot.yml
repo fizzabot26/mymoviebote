@@ -2,9 +2,8 @@ name: 24h Movie Clips Bot Automation
 
 on:
   schedule:
-    # Yeh setting bot ka automatic timer hai (Har 24 ghante baad khud chalne ke liye)
     - cron: '0 0 * * *'
-  workflow_dispatch: # Isse aap jab chahein khud bhi button daba kar bot chala sakti hain
+  workflow_dispatch:
 
 jobs:
   run-bot:
@@ -22,5 +21,9 @@ jobs:
         run: |
           pip install google-api-python-client requests
 
-      - name: Run AI Video Bot
+      - name: Run AI Video Bot Securely
+        env:
+          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
+          BLOG_ID: ${{ secrets.BLOG_ID }}
+          HUGGINGFACE_TOKEN: ${{ secrets.HUGGINGFACE_TOKEN }}
         run: python bot.py
