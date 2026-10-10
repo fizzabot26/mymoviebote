@@ -1,29 +1,37 @@
 name: 24h Movie Clips Bot Automation
 
 on:
-  schedule:
-    - cron: '0 0 * * *'
   workflow_dispatch:
+    inputs:
+      duration:
+        description: 'Shorts Duration Selector'
+        required: true
+        default: '60'
+      category:
+        description: 'Category Live Search'
+        required: false
+        default: 'Movie Action Scenes'
 
 jobs:
   run-bot:
-    runs-on: ubuntu-latest
+    runs-size: ubuntu-latest
     steps:
-      - name: Checkout Repository Code
-        uses: actions/checkout@v4
+    - name: Checkout Code Repository
+      uses: actions/checkout@v4
 
-      - name: Setup Free Python Environment
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.10'
+    - name: Setup Python System Environment
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.10'
 
-      - name: Install Tools
-        run: |
-          pip install google-api-python-client requests
+    - name: Install Critical Requirements
+      run: |
+        pip install google-api-python-client huggingface_hub
 
-      - name: Run AI Video Bot Securely
-        env:
-          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
-          BLOG_ID: ${{ secrets.BLOG_ID }}
-          HUGGINGFACE_TOKEN: ${{ secrets.HUGGINGFACE_TOKEN }}
-        run: python bot.py
+    - name: Run AI Movie Fetching Engine
+      env:
+        YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
+        HUGGINGFACE_TOKEN: ${{ secrets.HUGGINGFACE_TOKEN }}
+        BLOG_ID: ${{ secrets.BLOG_ID }}
+      run: |
+        python bot.py --duration "${{ github.event.inputs.duration }}" --query "${{ github.event.inputs.category }}"
