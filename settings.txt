@@ -1,0 +1,14 @@
+# =====================================================================
+# 🛠️ BOT CONTROL PANEL (SETTINGS)
+# =====================================================================
+YOUTUBE_API_KEY = "AIzaSyBj1jf_mnloHrAFUkb--vhYnIghw2vMj7M"
+BLOG_ID = "6619804892267403764"
+HUGGINGFACE_TOKEN = "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"
+
+# ⏱️ TIME & QUANTITY CONTROL (Aapki Apni Marzi)
+SHORT_DURATION_SECONDS = 60     # Kitne seconds ka clip chahiye (Example: 60 = 1 min)
+MAX_SHORTS_TO_EXTRACT = 15      # Ek lambi video se kitne shorts nikalne hain (10, 15, 20)
+
+# 24-HOUR AUTOMATION SWITCH
+ENABLE_24_HOUR_AUTOMATION = True  # True = Har waqt cloud par khud chale | False = Off
+# =====================================================================
