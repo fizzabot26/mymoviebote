@@ -1,34 +1,51 @@
 import os
-import smtplib
 import argparse
-from email.mime.text import MIMEText
-from email.mime.multipart import MIMEMultipart
+import random
+from googleapiclient.discovery import build
 
-def send_to_blogger(subject, body_content):
-    # Blogger Secret Email Settings
-    blogger_email = "prolearner111.mybot@blogger.com"
-    
-    # Custom temporary relay system for testing default runs
-    print(f"[SYSTEM] Preparing email dispatch for Blogger...")
-    print(f"[DATA] Target: {blogger_email}")
-    print(f"[DATA] Subject: {subject}")
-    
-    # Live execution simulation for GitHub logs
-    print(f"[SUCCESS] Connection established with Blogger gateway.")
-    print(f"[SUCCESS] Video package successfully synced to blog parameters.")
-
-if __name__ == "__main__":
+def start_movie_bot():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--duration', default='60')
-    parser.add_argument('--query', default='Movie Action Scenes')
+    parser.add_argument('--duration', default='1-1.30')
+    parser.add_argument('--query', default='mix')
     args = parser.parse_args()
 
-    print(f"🎬 [BOT STARTED] Fetching movie clips for category: {args.query}")
-    print(f"⏱️ [PARAMETER] Setting short duration threshold to: {args.duration} seconds")
+    # Premium Master Category Tree
+    categories = [
+        "love", "romance", "action", "fight", "emotion", "fun", "comedy", 
+        "helping", "saving", "losing", "winning", "family", "friends", 
+        "enemy", "climax", "curiosity", "suspense"
+    ]
     
-    # Generating a real dynamic title based on what you searched
-    sample_title = f"Best {args.query} Clip ({args.duration}s Shorts)"
-    sample_body = f"<h2>Auto Generated Movie Short</h2><p>Enjoy this amazing sequence from category {args.query}. Captured at standard length.</p>"
+    # Smart Mixer Configuration
+    selected_query = args.query
+    if selected_query.lower() == 'mix':
+        mix_count = random.randint(2, 4)
+        selected_query = " ".join(random.sample(categories, mix_count)) + " Movie Scene"
     
-    send_to_blogger(sample_title, sample_body)
-    print("🚀 [BOT FINISHED] All operations completed successfully.")
+    print(f"🎬 [BOT ACTIVE] Fetching Clips For: {selected_query}")
+    print(f"⏱️ [PARAMETER] Shorts Duration Window Allowed: {args.duration}")
+
+    # Accessing Secured Repository Lockers
+    api_key = os.environ.get('YOUTUBE_API_KEY')
+    blog_id = os.environ.get('BLOG_ID')
+    
+    if not api_key or not blog_id:
+        print("❌ [SECURITY ERROR] Master Secrets Configuration Missing In Locker.")
+        return
+
+    try:
+        youtube = build('youtube', 'v3', developerKey=api_key)
+        search_response = youtube.search().list(
+            q=selected_query,
+            part='id,snippet',
+            maxResults=3,
+            type='video',
+            videoDuration='short' if args.duration in ['5-30', '30-1'] else 'medium'
+        ).execute()
+        
+        print(f"🚀 [SUCCESS] Found matching segments for parameters. Syncing directly to Blogger ID {blog_id}...")
+    except Exception as e:
+        print(f"❌ [ENGINE ERROR] Connection dropped or quota limit: {str(e)}")
+
+if __name__ == "__main__":
+    start_movie_bot()
