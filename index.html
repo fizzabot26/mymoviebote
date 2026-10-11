@@ -105,12 +105,6 @@
             color: var(--text-main);
             font-size: 14px;
             box-sizing: border-box;
-            transition: border-color 0.2s;
-        }
-
-        input[type="text"]:focus, select:focus {
-            border-color: var(--primary-accent);
-            outline: none;
         }
 
         .slider-container {
@@ -143,12 +137,6 @@
             padding: 8px 0;
         }
 
-        .checkbox-row input {
-            accent-color: var(--primary-accent);
-            width: 16px;
-            height: 16px;
-        }
-
         .cluster-matrix-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
@@ -164,7 +152,6 @@
             display: flex;
             align-items: center;
             gap: 10px;
-            transition: all 0.2s;
         }
 
         .cluster-card.active-lock {
@@ -183,17 +170,6 @@
             margin-bottom: 10px;
         }
 
-        .music-info {
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-        }
-
-        .music-title {
-            font-size: 14px;
-            font-weight: 600;
-        }
-
         .music-platform-tag {
             font-size: 11px;
             color: var(--success-green);
@@ -208,7 +184,6 @@
             border: none;
             cursor: pointer;
             text-transform: uppercase;
-            transition: all 0.2s;
         }
 
         .btn-primary {
@@ -221,7 +196,6 @@
 
         .btn-primary:hover {
             background: #ff6b81;
-            box-shadow: 0 4px 12px rgba(255, 71, 87, 0.3);
         }
 
         .btn-audio {
@@ -235,13 +209,6 @@
             background: var(--danger-red);
         }
 
-        .btn-webgpu {
-            background: #6c5ce7;
-            color: white;
-            width: 100%;
-            margin-top: 10px;
-        }
-
         .vault-table {
             width: 100%;
             border-collapse: collapse;
@@ -252,14 +219,6 @@
             text-align: left;
             padding: 12px;
             border-bottom: 1px solid var(--border-color);
-            font-size: 14px;
-        }
-
-        .vault-table th {
-            color: var(--text-muted);
-            font-weight: 600;
-            text-transform: uppercase;
-            font-size: 12px;
         }
 
         .status-badge {
@@ -268,15 +227,12 @@
             padding: 4px 8px;
             border-radius: 4px;
             font-size: 12px;
-            font-weight: 600;
         }
 
         .loss-prevention-banner {
             font-size: 12px;
             color: var(--success-green);
-            text-align: center;
             font-family: monospace;
-            margin-top: 5px;
         }
     </style>
 </head>
@@ -290,9 +246,9 @@
             <h1>AI Video Automation Hub</h1>
             <div class="loss-prevention-banner" id="saveStateIndicator">● Timeline State Saved (Anti-Loss Cache Engine Connected)</div>
         </div>
-        <div style="display: flex; gap: 15px; align-items: center;">
+        <div style="display: flex; gap: 15px;">
             <input type="text" id="userAccessEmail" placeholder="Admin Authorized Email" style="width: 220px;">
-            <input type="text" id="botShieldToken" placeholder="Bot Protection Token Shield" style="width: 220px;">
+            <input type="text" id="botShieldToken" placeholder="Personal GitHub Classic Token" style="width: 220px;">
         </div>
     </div>
 
@@ -315,7 +271,7 @@
         </div>
         <div class="checkbox-row">
             <input type="checkbox" id="bloggerSyncToggle" checked>
-            <label for="bloggerSyncToggle" style="color: var(--text-main); font-size:13px; cursor: pointer;">Enable Direct Blogger API Offload Connector (0% Native Storage Computing Overhead)</label>
+            <label for="bloggerSyncToggle" style="color: var(--text-main); font-size:13px;">Enable Direct Blogger API Offload Connector (0% Native Storage Computing Overhead)</label>
         </div>
     </div>
 
@@ -333,3 +289,20 @@
             <div class="field-group">
                 <label>Duration Window Segment Limits</label>
                 <select id="shortsDurationDropdown">
+                    <option value="30-60">Short Range Segment (30s – 1m)</option>
+                    <option value="60-90">Standard Mid Range Slot (1m – 1.30m)</option>
+                    <option value="90-120" selected>Extended Output Window (1.30m – 2m)</option>
+                    <option value="120-180">Max Production Window (2m – 3m)</option>
+                </select>
+                <select id="longDurationDropdown" style="display: none;">
+                    <option value="5">5 Minutes Production Length</option>
+                    <option value="8">8 Minutes Production Length</option>
+                    <option value="12" selected>12 Minutes Standard Feature Film</option>
+                    <option value="18">18 Minutes Premium Long Form</option>
+                    <option value="25">25 Minutes Extended Docu Format</option>
+                    <option value="30">30 Minutes High Retention Broadcast</option>
+                    <option value="45">45 Minutes Max Cinematic Timeline</option>
+                </select>
+            </div>
+            <div class="field-group">
+                <label>Video Short Goal Context Overlay</label>
