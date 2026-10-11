@@ -3,302 +3,120 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Video Automation Hub - Master Control Panel</title>
+    <title>AI Premium Ultimate Multi-User Automation Hub</title>
     <style>
-        :root {
-            --bg-dark: #0f172a;
-            --card-bg: #1e293b;
-            --primary-accent: #ff4757;
-            --secondary-accent: #3b82f6;
-            --success-green: #22c55e;
-            --danger-red: #ef4444;
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
-            --border-color: #334155;
-            --input-bg: #0f172a;
-        }
-
-        body {
-            background-color: var(--bg-dark);
-            color: var(--text-main);
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
-        }
-
-        .container {
-            width: 100%;
-            max-width: 1100px;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .header-panel {
-            background: var(--card-bg);
-            padding: 20px;
-            border-radius: 8px;
-            border: 1px solid var(--border-color);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .header-panel h1 {
-            margin: 0;
-            font-size: 24px;
-            color: var(--primary-accent);
-        }
-
-        .section-block {
-            background: var(--card-bg);
-            padding: 24px;
-            border-radius: 8px;
-            border: 1px solid var(--border-color);
-        }
-
-        .section-block h2 {
-            margin-top: 0;
-            margin-bottom: 20px;
-            font-size: 18px;
-            border-left: 4px solid var(--primary-accent);
-            padding-left: 10px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .form-grid-3 {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-        }
-
-        .form-grid-2 {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 20px;
-        }
-
-        .field-group {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        label {
-            font-size: 13px;
-            font-weight: 600;
-            color: var(--text-muted);
-            text-transform: uppercase;
-        }
-
-        input[type="text"], select {
-            width: 100%;
-            padding: 12px;
-            border-radius: 6px;
-            border: 1px solid var(--border-color);
-            background: var(--input-bg);
-            color: var(--text-main);
-            font-size: 14px;
-            box-sizing: border-box;
-        }
-
-        .slider-container {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            background: var(--input-bg);
-            padding: 8px 12px;
-            border-radius: 6px;
-            border: 1px solid var(--border-color);
-        }
-
-        input[type="range"] {
-            flex: 1;
-            accent-color: var(--secondary-accent);
-        }
-
-        .range-value {
-            font-family: monospace;
-            font-size: 13px;
-            min-width: 45px;
-            text-align: right;
-            color: var(--secondary-accent);
-        }
-
-        .checkbox-row {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 8px 0;
-        }
-
-        .cluster-matrix-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-            gap: 12px;
-            margin-top: 10px;
-        }
-
-        .cluster-card {
-            background: var(--input-bg);
-            border: 1px solid var(--border-color);
-            padding: 12px;
-            border-radius: 6px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .cluster-card.active-lock {
-            border-color: var(--primary-accent);
-            background: rgba(255, 71, 87, 0.05);
-        }
-
-        .music-track-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: var(--input-bg);
-            padding: 12px 16px;
-            border-radius: 6px;
-            border: 1px solid var(--border-color);
-            margin-bottom: 10px;
-        }
-
-        .music-platform-tag {
-            font-size: 11px;
-            color: var(--success-green);
-            font-family: monospace;
-        }
-
-        .btn {
-            padding: 12px 24px;
-            font-size: 14px;
-            font-weight: 600;
-            border-radius: 6px;
-            border: none;
-            cursor: pointer;
-            text-transform: uppercase;
-        }
-
-        .btn-primary {
-            background: var(--primary-accent);
-            color: white;
-            width: 100%;
-            font-size: 16px;
-            padding: 16px;
-        }
-
-        .btn-primary:hover {
-            background: #ff6b81;
-        }
-
-        .btn-audio {
-            background: var(--secondary-accent);
-            color: white;
-            font-size: 12px;
-            padding: 6px 14px;
-        }
-
-        .btn-audio.playing {
-            background: var(--danger-red);
-        }
-
-        .vault-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 10px;
-        }
-
-        .vault-table th, .vault-table td {
-            text-align: left;
-            padding: 12px;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .status-badge {
-            background: rgba(234, 179, 8, 0.1);
-            color: #eab308;
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 12px;
-        }
-
-        .loss-prevention-banner {
-            font-size: 12px;
-            color: var(--success-green);
-            font-family: monospace;
-        }
+        :root { --primary-red: #ff4757; --accent-blue: #3742fa; --bg-dark: #0a0a0d; --card-bg: #13131a; --input-bg: #252530; --text-light: #f1f2f6; --text-muted: #a4b0be; }
+        body { background: var(--bg-dark); color: var(--text-light); font-family: 'Segoe UI', Arial, sans-serif; margin: 0; padding: 0; display: flex; height: 100vh; overflow: hidden; }
+        
+        /* 📱 SIDEBAR NAVIGATION PANEL ARCHITECTURE */
+        .sidebar-panel { width: 280px; background: var(--card-bg); border-right: 2px solid #2f3542; display: flex; flex-direction: column; padding: 20px 15px; box-sizing: border-box; justify-content: space-between; }
+        .sidebar-top { display: flex; flex-direction: column; width: 100%; }
+        .sidebar-brand { color: var(--primary-red); font-size: 18px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; text-align: center; margin-bottom: 25px; border-bottom: 2px dashed #2f3542; padding-bottom: 15px; }
+        .nav-btn { background: transparent; border: 1px solid #2f3542; color: var(--text-light); padding: 12px 15px; border-radius: 8px; font-weight: 600; font-size: 13px; text-align: left; cursor: pointer; margin-bottom: 10px; transition: 0.2s; display: flex; align-items: center; gap: 10px; width: 100%; text-transform: uppercase; }
+        .nav-btn:hover, .nav-btn.active { background: var(--primary-red); border-color: var(--primary-red); box-shadow: 0 4px 12px rgba(255, 71, 87, 0.3); }
+        .sidebar-footer-auth { border-top: 2px solid #2f3542; padding-top: 15px; display: flex; flex-direction: column; gap: 8px; }
+        
+        /* 🌌 CENTRAL STUDIO DISPLAY CANVAS */
+        .main-content-window { flex: 1; display: flex; flex-direction: column; overflow-y: auto; box-sizing: border-box; }
+        .workspace-wrapper { padding: 35px; max-width: 1050px; margin: 0 auto; width: 100%; box-sizing: border-box; }
+        .control-block-card { background: var(--card-bg); padding: 25px; border-radius: 12px; border: 1px solid #2f3542; margin-bottom: 25px; box-sizing: border-box; }
+        h2 { color: var(--primary-red); font-size: 15px; text-transform: uppercase; margin-top: 0; margin-bottom: 20px; border-left: 4px solid var(--primary-red); padding-left: 10px; }
+        label { font-weight: bold; display: block; margin-bottom: 10px; color: var(--text-muted); font-size: 12px; text-transform: uppercase; }
+        
+        .horizontal-filters-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 20px; }
+        .horizontal-filters-row select, .horizontal-filters-row input { width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #4b5563; background: var(--input-bg); color: #fff; font-size: 14px; box-sizing: border-box; }
+        
+        /* CASCADING UNLOCK ANIMATION VISIBILITY PANELS */
+        .conditional-form-block { display: none; margin-top: 15px; border-top: 1px dashed #2f3542; padding-top: 20px; }
+        .conditional-form-block.revealed { display: block; }
+        
+        .matrix-theme-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 15px; }
+        .matrix-theme-item { background: var(--input-bg); padding: 14px; border-radius: 8px; text-align: center; cursor: pointer; border: 1px solid #4b5563; font-size: 12px; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 5px; transition: 0.15s; }
+        .matrix-theme-item input { display: none; }
+        .matrix-theme-item.selected { background: var(--primary-red); border-color: var(--primary-red); color: white; box-shadow: 0 4px 10px rgba(255, 71, 87, 0.3); }
+        
+        .music-player-row { display: flex; align-items: center; gap: 10px; background: var(--input-bg); padding: 12px; border-radius: 8px; border: 1px solid #2f3542; margin-top: 8px; }
+        .play-preview-btn { background: var(--accent-blue); color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 11px; font-weight: bold; }
+        .action-submit-btn { width: 100%; background: var(--primary-red); color: white; padding: 16px; border: none; border-radius: 8px; font-weight: bold; font-size: 15px; cursor: pointer; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 15px; }
+        .app-view-panel { display: none; }
+        .app-view-panel.active { display: block; }
     </style>
 </head>
 <body>
 
-<div class="container">
-
-    <!-- Header Panel Matrix -->
-    <div class="header-panel">
-        <div>
-            <h1>AI Video Automation Hub</h1>
-            <div class="loss-prevention-banner" id="saveStateIndicator">● Timeline State Saved (Anti-Loss Cache Engine Connected)</div>
+    <!-- 📱 SIDEBAR NAVIGATION PANEL -->
+    <div class="sidebar-panel">
+        <div class="sidebar-top">
+            <div class="sidebar-brand">⚙️ Automation Hub</div>
+            <button class="nav-btn active" onclick="switchMainDashboardViewTab('shortsStudioTabWindow', this)">📱 Shorts Studio</button>
+            <button class="nav-btn" onclick="switchMainDashboardViewTab('longVideoTabWindow', this)">🎞️ Long Video Studio</button>
+            <button class="nav-btn" onclick="switchMainDashboardViewTab('pictureGridTabWindow', this)">📸 Picture AI Grid</button>
+            <button class="nav-btn" onclick="switchMainDashboardViewTab('settingsPanelTabWindow', this)">🛠️ System Settings</button>
         </div>
-        <div style="display: flex; gap: 15px; align-items: center;">
-            <input type="text" id="userAccessEmail" placeholder="Admin Authorized Email" style="width: 220px;">
-            <input type="text" id="botShieldToken" placeholder="Personal GitHub Classic Token" style="width: 220px;">
-        </div>
-    </div>
-
-    <!-- MAIN ACTION PANEL POSITIONED AT TOP FOR INSTANT ACCESS -->
-    <div class="section-block" style="border: 2px solid var(--primary-accent); background: rgba(255, 71, 87, 0.02);">
-        <h2>🚀 Execution Hub Core</h2>
-        <button class="btn btn-primary" onclick="triggerAutomationIngestionPipelineExecution()">🚀 Start Watermark-Free Extraction & Ingestion Pipeline</button>
-        <button class="btn" style="background: var(--card-bg); border:1px solid var(--border-color); color:var(--text-main); width:100%; margin-top:10px; font-size:12px;" onclick="triggerLocalWebGpuQualityUpscaler()">💎 [ Trigger Local Device WebGPU Hardware Accelerator Pixel Enhancer ]</button>
-    </div>
-
-    <!-- Media Ingest Module -->
-    <div class="section-block">
-        <h2>🔌 Media Stream Source Ingestion Pipeline</h2>
-        <div class="form-grid-2" style="grid-template-columns: 2fr 1fr; margin-bottom: 15px;">
-            <div class="field-group">
-                <label>Source Pipeline Multi-Platform Streaming URL Link</label>
-                <input type="text" id="sourceStreamUrl" placeholder="Paste YouTube, Facebook, TikTok, Instagram, Snapchat, or Bilibili URL...">
-            </div>
-            <div class="field-group">
-                <label>Extraction Resolution Target Matrix</label>
-                <select id="canvasResolution">
-                    <option value="720">720p HD Render Path</option>
-                    <option value="1080" selected>1080p Full HD Core Resolution (Standard)</option>
-                    <option value="4k">4K Cinematic Un-watermarked Matrix</option>
-                </select>
-            </div>
-        </div>
-        <div class="checkbox-row">
-            <input type="checkbox" id="bloggerSyncToggle" checked>
-            <label for="bloggerSyncToggle" style="color: var(--text-main); font-size:13px;">Enable Direct Blogger API Offload Connector (0% Native Storage Computing Overhead)</label>
+        
+        <div class="sidebar-footer-auth">
+            <div style="font-size: 11px; color: var(--text-muted); text-align: center; font-weight: bold; margin-bottom: 5px;">ACCOUNT PROFILE STATE</div>
+            <button class="nav-btn" style="border-color: #2ed573; color: #2ed573;" onclick="alert('Session Authorized Security Gate Active.')">👤 Verified User</button>
+            <button class="nav-btn" style="border-color: #ff4757; color: #ff4757;" onclick="alert('Logging out safely...')">🔒 Logout Security Link</button>
         </div>
     </div>
 
-    <!-- Output Duration Controls -->
-    <div class="section-block">
-        <h2>⏳ Target Timeline Multipliers Formats</h2>
-        <div class="form-grid-3">
-            <div class="field-group">
-                <label>Operational Media Target Mode</label>
-                <select id="operationModeToggle" onchange="adaptTimelineDurationDropdowns()">
-                    <option value="shorts" selected>📱 Shorts Video Mode Allocations</option>
-                    <option value="long">🎞️ Long Form Master Length Increments</option>
-                </select>
-            </div>
-            <div class="field-group">
-                <label>Duration Window Segment Limits</label>
-                <select id="shortsDurationDropdown">
-                    <option value="30-60">Short Range Segment (30s – 1m)</option>
-                    <option value="60-90">Standard Mid Range Slot (1m – 1.30m)</option>
-                    <option value="90-120" selected>Extended Output Window (1.30m – 2m)</option>
-                    <option value="120-180">Max Production Window (2m – 3m)</option>
-                </select>
-                <select id="longDurationDropdown" style="display: none;">
+    <!-- 🌌 CENTRAL CANVAS WINDOW -->
+    <div class="main-content-window">
+        <div class="workspace-wrapper">
+            
+            <!-- MODE 1: SHORTS STUDIO COMPONENT -->
+            <div id="shortsStudioTabWindow" class="app-view-panel active">
+                <div class="control-block-card">
+                    <h2>📱 Ingestion Matrix & Parameters Multipliers (Shorts Layout)</h2>
+                    <div class="horizontal-filters-row">
+                        <div>
+                            <label>Target Shorts Required Volume:</label>
+                            <select id="shortsCountSelectionDropdownFilter">
+                                <option value="5">Generate Batch of 5 Shorts</option>
+                                <option value="12" selected>Generate Batch of 12 Shorts Loop</option>
+                                <option value="24">Generate Batch of 24 Shorts Loop</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label>Shorts Segment Specific Length:</label>
+                            <select id="shortsDurationSelectionDropdownFilter">
+                                <option value="30">30 Seconds Duration Focus</option>
+                                <option value="60" selected>60 Seconds Optimized Layout</option>
+                                <option value="90">90 Seconds Long Range Reels</option>
+                                <option value="120">120 Seconds Maximum Threshold</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label>Target Core Social Media Engine Link:</label>
+                            <select id="shortsTargetSocialPlatformDropdown" onchange="synchronizeDynamicSocialMediaAudioStreams()">
+                                <option value="NONE" disabled selected>--- Select Target Network ---</option>
+                                <option value="YOUTUBE">YouTube Shorts Portal</option>
+                                <option value="TIKTOK">TikTok Trending Feed</option>
+                                <option value="FACEBOOK">Facebook Reels Gateway</option>
+                                <option value="INSTAGRAM">Instagram Reels Matrix</option>
+                                <option value="SNAPCHAT">Snapchat Spotlight Channel</option>
+                                <option value="BILIBILI">Bilibili Native Stream Layout</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 🌍 CASCADING LAYER STEP 1: GEOLOCATION / COUNTRY TARGETING CHOICE -->
+                <div id="shortsCountryTargetSelectionBlock" class="control-block-card conditional-form-block">
+                    <h2>🌍 Step 1: Regional Demographics & Cultural Brought-Up Focus</h2>
+                    <div class="field-group">
+                        <label>Select Target Audience Country Location Node:</label>
+                        <select id="shortsGeoRegionSelectorField" onchange="unlockRegionalVocalAndAudioTtsTracks()">
+                            <option value="NONE" disabled selected>--- Choose Region/Country Target ---</option>
+                            <option value="USA">United States (Friendly, Conversational Tone Vibe)</option>
+                            <option value="UK">United Kingdom (Serious, Confident, Dignified Equivalence)</option>
+                            <option value="Germany">Germany (Formal, Structured High-Precision Logical Track)</option>
+                            <option value="China">China Network (High-Velocity Structural Engagement Hub)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- 🎙️ CASCADING LAYER STEP 2: COUNTRY-SPECIFIC AUDIO & VOICE CONFIGURATOR -->
+                <div id="shortsVocalAndRegionalAudioConfigurationBlock" class="control-block-card conditional-form-block">
+                    <h2>🎙️ Step 2: Adaptive Speech Engine Profiles & Regional Songs</h2>
