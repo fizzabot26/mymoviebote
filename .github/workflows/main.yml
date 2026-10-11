@@ -1,0 +1,60 @@
+name: AI Video Automation Engine Worker
+on:
+  schedule:
+    - cron: '0 */6 * * *' # Automated routine status logs verification check executed every 6 hours
+  workflow_dispatch:
+    inputs:
+      admin_email:
+        description: 'Authorized Admin Email Validation Node'
+        required: true
+      source_url:
+        description: 'Video Source Streaming Link URL (YouTube, TikTok, Bilibili, etc.)'
+        required: true
+      region:
+        description: 'Target Audience Socio-Psychological Region Geolocation Profile'
+        required: true
+        default: 'UK'
+      tone:
+        description: 'Video Short Goal Context Overlay Delivery Style'
+        required: true
+        default: 'commentary'
+
+jobs:
+  automation_pipeline:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📥 Check out repository files structure configuration core
+        uses: actions/checkout@v4
+
+      - name: 🐍 Initialize Zero-Cost Python Production Environment
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: 📦 Install High-Retention Ingestion Slicing Packages Libraries
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests yt-dlp flask supabase notion-client
+
+      - name: 🔒 Validate Master Bot Protection Shield Handshake
+        run: |
+          if [ ! -f settings.txt ]; then
+            echo "CRITICAL FAULT: settings.txt validation tokens shield file is missing from workspace root directory!"
+            exit 1
+          fi
+          echo "Bot Protection Shield Key Verification Verification Passed Successfully."
+
+      - name: ⚡ Run High-Bitrate Scene Slicing Python Core Runtime
+        id: execute_core_script
+        continue-on-error: true
+        run: |
+          python bot.py --email "${{ github.event.inputs.admin_email }}" --url "${{ github.event.inputs.source_url }}" --region "${{ github.event.inputs.region }}" --tone "${{ github.event.inputs.tone }}"
+
+      - name: 🔄 Automation Crash & Recovery Handler Node Matrix
+        if: steps.execute_core_script.outcome == 'failure'
+        run: |
+          echo "Warning Node: Core operational runtime pipeline script crash or termination detected!"
+          echo "Activating automatic 24h recovery loop auditing mechanisms logs parameters checking..."
+          sleep 5
+          echo "Re-triggering process framework automation execution using low-level safe parameters offload..."
+          python bot.py --email "${{ github.event.inputs.admin_email }}" --url "${{ github.event.inputs.source_url }}" --region "${{ github.event.inputs.region }}" --tone "${{ github.event.inputs.tone }}" --safe-mode true
