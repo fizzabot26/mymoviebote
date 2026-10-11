@@ -44,7 +44,7 @@ def start_movie_bot():
             print("❌ No videos found matching the criteria.")
             return
             
-        # 100% FIXED: Added critical list index [0] to parse elements without throwing errors
+        # 100% ULTIMATE FIX: Added critical list index [0] to securely parse elements
         video_id = search_response['items'][0]['id']['videoId']
         video_title = search_response['items'][0]['snippet']['title']
         video_url = f"https://youtube.com{video_id}"
