@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Premium Ultimate Multi-Platform Video Studio Hub</title>
+    <title>AI Ultimate Production Panel</title>
     <style>
         :root { 
             --primary-red: #ff4757; 
@@ -26,7 +26,7 @@
             overflow: hidden; 
         }
         
-        /* 📱 SIDEBAR NAVIGATION PANEL ARCHITECTURE */
+        /* 📱 SIDEBAR NAVIGATION */
         .sidebar-panel { 
             width: 290px; 
             background: var(--card-bg); 
@@ -37,7 +37,6 @@
             box-sizing: border-box; 
             justify-content: space-between; 
         }
-        .sidebar-top { display: flex; flex-direction: column; width: 100%; }
         .sidebar-brand { 
             color: var(--primary-red); 
             font-size: 18px; 
@@ -61,9 +60,6 @@
             cursor: pointer; 
             margin-bottom: 10px; 
             transition: 0.2s; 
-            display: flex; 
-            align-items: center; 
-            gap: 10px; 
             width: 100%; 
             text-transform: uppercase; 
         }
@@ -72,15 +68,8 @@
             border-color: var(--primary-red); 
             box-shadow: 0 4px 12px rgba(255, 71, 87, 0.3); 
         }
-        .sidebar-footer-auth { 
-            border-top: 2px solid #2f3542; 
-            padding-top: 15px; 
-            display: flex; 
-            flex-direction: column; 
-            gap: 8px; 
-        }
         
-        /* 🌌 CENTRAL DASHBOARD CANVAS DISPLAY WINDOW */
+        /* 🌌 MAIN CONTENT SPACE */
         .main-content-window { 
             flex: 1; 
             display: flex; 
@@ -138,16 +127,7 @@
             box-sizing: border-box; 
         }
         
-        /* CASCADING UNLOCK ANIMATIONS */
-        .conditional-form-block { 
-            display: none; 
-            margin-top: 15px; 
-            border-top: 1px dashed #2f3542; 
-            padding-top: 20px; 
-        }
-        .conditional-form-block.revealed { display: block; }
-        
-        /* 🖱️ DRAG & DROP MEDIA UPLOADER CANVASES */
+        /* 🖱️ DRAG & DROP DESIGN */
         .drag-drop-zone-wrapper {
             border: 2px dashed #4b5563;
             background: var(--input-bg);
@@ -162,9 +142,8 @@
             border-color: var(--primary-red);
             background: rgba(255, 71, 87, 0.05);
         }
-        .drag-drop-file-input { display: none; }
         
-        /* AUDIO CONTROLLER CONFIG SLIDERS ENGINE */
+        /* 🎛️ CONTROLLERS & CONTROLS */
         .audio-sliders-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -177,6 +156,7 @@
             margin-top: 5px;
         }
         
+        /* CLUSTER MATRIX DESIGN */
         .matrix-theme-grid { 
             display: grid; 
             grid-template-columns: repeat(3, 1fr); 
@@ -196,15 +176,14 @@
             align-items: center; 
             justify-content: center; 
             gap: 5px; 
-            transition: 0.15s; 
             color: var(--text-light);
+            user-select: none;
         }
         .matrix-theme-item input { display: none; }
         .matrix-theme-item.selected { 
             background: var(--primary-red); 
             border-color: var(--primary-red); 
-            color: white; 
-            box-shadow: 0 4px 10px rgba(255, 71, 87, 0.3); 
+            color: #fff;
         }
         
         .music-player-row { 
@@ -224,8 +203,6 @@
             padding: 6px 12px; 
             border-radius: 4px; 
             cursor: pointer; 
-            font-size: 11px; 
-            font-weight: bold; 
         }
         .action-submit-btn { 
             width: 100%; 
@@ -238,43 +215,59 @@
             font-size: 15px; 
             cursor: pointer; 
             text-transform: uppercase; 
-            letter-spacing: 0.5px; 
             margin-top: 15px; 
         }
+        
         .app-view-panel { display: none; }
         .app-view-panel.active { display: block; }
+        
+        .conditional-form-block { display: none; margin-top: 15px; border-top: 1px dashed #2f3542; padding-top: 20px; }
+        .conditional-form-block.revealed { display: block; }
     </style>
 </head>
 <body>
 
-    <!-- 📱 SIDEBAR NAVIGATION PANEL ARCHITECTURE WITH GLOBAL CONTROLS -->
+    <!-- 📱 SIDEBAR PANEL CONTAINER -->
     <div class="sidebar-panel">
         <div class="sidebar-top">
-            <div class="sidebar-brand">⚙️ Media Automation Bot</div>
+            <div class="sidebar-brand">⚙️ AI Studio Hub</div>
             <button class="nav-btn active" onclick="switchMainDashboardViewTab('shortsStudioTabWindow', this)">📱 Shorts Studio</button>
             <button class="nav-btn" onclick="switchMainDashboardViewTab('longVideoTabWindow', this)">🎞️ Long Video Studio</button>
             <button class="nav-btn" onclick="switchMainDashboardViewTab('pictureGridTabWindow', this)">📸 Picture AI Grid</button>
-            <button class="nav-btn" onclick="switchMainDashboardViewTab('settingsPanelTabWindow', this)">🛠️ New Core Settings</button>
+            <button class="nav-btn" onclick="switchMainDashboardViewTab('settingsPanelTabWindow', this)">🛠️ Hub Settings</button>
         </div>
-        
-        <div class="sidebar-footer-auth">
-            <button class="nav-btn" style="border-color: #2ed573; color: #2ed573;" onclick="alert('Hardware Engine Active Node Synced.')">👤 Engine State: Active</button>
-            <button class="nav-btn" style="border-color: #ff4757; color: #ff4757;" onclick="alert('Session terminated safely.')">🔒 System Logout</button>
+        <div class="sidebar-footer-auth" style="border-top: 2px solid #2f3542; padding-top: 15px;">
+            <button class="nav-btn" style="border-color: #2ed573; color: #2ed573;" onclick="alert('Secure Hardware Synced.')">👤 State: Active</button>
         </div>
     </div>
 
-    <!-- 🌌 CENTRAL DASHBOARD STUDIO WINDOW -->
+    <!-- 🌌 CENTRAL CANVAS MAIN PLATFORM -->
     <div class="main-content-window">
         <div class="workspace-wrapper">
             
-            <!-- VIEW TAB 1: AUTOMATED SHORTS MATRIX INTERFACE -->
+            <!-- VIEW TAB 1: SHORTS ENGINE -->
             <div id="shortsStudioTabWindow" class="app-view-panel active">
                 
-                <!-- 🖱️ MODULE: DRAG & DROP AND CLICK TO UPLOAD INTERFACE ZONE -->
+                <!-- INPUT URL PIPELINE & HARDWARE ASSET DRAG AND DROP BOX -->
                 <div class="control-block-card">
-                    <h2>📥 Drag & Drop Media Asset Ingestion Pipeline</h2>
+                    <h2>📥 Media Ingestion Data Pipeline</h2>
+                    <div style="margin-bottom: 20px;">
+                        <label>Source Multi-Platform Video Streaming URL Link:</label>
+                        <input type="text" id="mediaSourcePipelineUrlLinkInput" style="width:100%; padding:12px; border-radius:8px; border:1px solid #4b5563; background:var(--input-bg); color:#fff;" placeholder="Paste YouTube, TikTok, Instagram, Snapchat or Bilibili URL stream here...">
+                    </div>
+                    
+                    <label>Or Drop Local Source Files Directly:</label>
                     <div class="drag-drop-zone-wrapper" id="canvasDragDropInteractionZone" onclick="triggerSystemFileUploadSelectorGrid()">
                         <div style="font-size: 28px; margin-bottom: 8px;">📁</div>
-                        <div id="uploadFeedbackLabelMessage" style="font-size: 13px; font-weight: bold; color: var(--text-light);">
+                        <div id="uploadFeedbackLabelMessage" style="font-size: 13px; font-weight: bold;">
                             Drag & Drop Videos/Pictures Here OR Click to Browse Device Storage
                         </div>
+                        <input type="file" id="hiddenNativeMediaAssetInputSlot" multiple style="display:none;" onchange="processSelectedMediaFilesMetadata(this)">
+                    </div>
+                </div>
+
+                <!-- FILTERS SELECTION CONTROL MATRICES -->
+                <div class="control-block-card">
+                    <h2>📱 Target Timeline Matrix Filters</h2>
+                    <div class="horizontal-filters-row">
+                        <div>
