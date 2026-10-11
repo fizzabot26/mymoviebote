@@ -3,160 +3,333 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ultimate Premium Multi-User Video Hub</title>
+    <title>AI Video Automation Hub - Master Control Panel</title>
     <style>
-        body { background: #0a0a0d; color: #f1f2f6; font-family: 'Segoe UI', Arial, sans-serif; padding: 40px; margin: 0; }
-        .master-panel { max-width: 950px; margin: 0 auto; background: #13131a; padding: 35px; border-radius: 16px; border: 2px solid #ff4757; box-shadow: 0 12px 36px rgba(0,0,0,0.7); }
-        h1, h2, h3 { color: #ff4757; text-align: center; margin-top: 0; text-transform: uppercase; letter-spacing: 1px; }
-        .control-block { margin-bottom: 25px; padding: 22px; background: #1b1b22; border-radius: 12px; border: 1px solid #2f3542; }
-        label { font-weight: bold; display: block; margin-bottom: 12px; color: #a4b0be; font-size: 14px; text-transform: uppercase; }
-        input[type="text"], select { width: 96%; padding: 12px; border-radius: 8px; border: 1px solid #4b5563; background: #252530; color: #ffffff; font-size: 15px; }
-        
-        .hub-group-title { color: #ff6b81; font-size: 14px; font-weight: bold; margin: 18px 0 8px 0; text-transform: uppercase; letter-spacing: 0.5px; border-left: 3px solid #ff4757; padding-left: 8px; }
-        .sub-category-matrix { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 15px; }
-        .matrix-item { background: #252530; padding: 12px; border-radius: 8px; text-align: center; cursor: pointer; border: 1px solid #4b5563; font-size: 13px; font-weight: 600; transition: 0.2s; user-select: none; display: flex; align-items: center; justify-content: center; gap: 5px; }
-        .matrix-item input { display: none; }
-        .matrix-item.selected { background: #ff4757; border-color: #ff4757; color: #ffffff; box-shadow: 0 4px 12px rgba(255, 71, 87, 0.4); }
-        
-        .action-btn { width: 100%; background: #ff4757; color: white; padding: 18px; border: none; border-radius: 8px; font-weight: bold; font-size: 16px; cursor: pointer; transition: 0.3s; letter-spacing: 0.5px; text-transform: uppercase; }
-        .action-btn:hover { background: #ff6b81; transform: translateY(-1px); }
-        .status-relay { margin-top: 12px; background: #0a0a0d; padding: 12px; border-radius: 6px; font-family: monospace; font-size: 13px; color: #2ed573; border-left: 4px solid #2ed573; }
+        :root {
+            --bg-dark: #0f172a;
+            --card-bg: #1e293b;
+            --primary-accent: #ff4757;
+            --secondary-accent: #3b82f6;
+            --success-green: #22c55e;
+            --danger-red: #ef4444;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-color: #334155;
+            --input-bg: #0f172a;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1100px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .header-panel {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-panel h1 {
+            margin: 0;
+            font-size: 24px;
+            color: var(--primary-accent);
+        }
+
+        .section-block {
+            background: var(--card-bg);
+            padding: 24px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .section-block h2 {
+            margin-top: 0;
+            margin-bottom: 20px;
+            font-size: 18px;
+            border-left: 4px solid var(--primary-accent);
+            padding-left: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .form-grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .form-grid-2 {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .field-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        label {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+
+        input[type="text"], select {
+            width: 100%;
+            padding: 12px;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+            background: var(--input-bg);
+            color: var(--text-main);
+            font-size: 14px;
+            box-sizing: border-box;
+            transition: border-color 0.2s;
+        }
+
+        input[type="text"]:focus, select:focus {
+            border-color: var(--primary-accent);
+            outline: none;
+        }
+
+        .slider-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: var(--input-bg);
+            padding: 8px 12px;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+        }
+
+        input[type="range"] {
+            flex: 1;
+            accent-color: var(--secondary-accent);
+        }
+
+        .range-value {
+            font-family: monospace;
+            font-size: 13px;
+            min-width: 45px;
+            text-align: right;
+            color: var(--secondary-accent);
+        }
+
+        .checkbox-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 0;
+        }
+
+        .checkbox-row input {
+            accent-color: var(--primary-accent);
+            width: 16px;
+            height: 16px;
+        }
+
+        .cluster-matrix-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 12px;
+            margin-top: 10px;
+        }
+
+        .cluster-card {
+            background: var(--input-bg);
+            border: 1px solid var(--border-color);
+            padding: 12px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.2s;
+        }
+
+        .cluster-card.active-lock {
+            border-color: var(--primary-accent);
+            background: rgba(255, 71, 87, 0.05);
+        }
+
+        .music-track-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--input-bg);
+            padding: 12px 16px;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 10px;
+        }
+
+        .music-info {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .music-title {
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .music-platform-tag {
+            font-size: 11px;
+            color: var(--success-green);
+            font-family: monospace;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            font-size: 14px;
+            font-weight: 600;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background: var(--primary-accent);
+            color: white;
+            width: 100%;
+            font-size: 16px;
+            padding: 16px;
+        }
+
+        .btn-primary:hover {
+            background: #ff6b81;
+            box-shadow: 0 4px 12px rgba(255, 71, 87, 0.3);
+        }
+
+        .btn-audio {
+            background: var(--secondary-accent);
+            color: white;
+            font-size: 12px;
+            padding: 6px 14px;
+        }
+
+        .btn-audio.playing {
+            background: var(--danger-red);
+        }
+
+        .btn-webgpu {
+            background: #6c5ce7;
+            color: white;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .vault-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        .vault-table th, .vault-table td {
+            text-align: left;
+            padding: 12px;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 14px;
+        }
+
+        .vault-table th {
+            color: var(--text-muted);
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 12px;
+        }
+
+        .status-badge {
+            background: rgba(234, 179, 8, 0.1);
+            color: #eab308;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .loss-prevention-banner {
+            font-size: 12px;
+            color: var(--success-green);
+            text-align: center;
+            font-family: monospace;
+            margin-top: 5px;
+        }
     </style>
 </head>
 <body>
 
-<div class="master-panel">
-    <h1>🎬 Multi-User Video Hub Control Station</h1>
-    
-    <!-- BLOCK 1: ACCESS GUARD -->
-    <div class="control-block">
-        <h2>🛡️ Session Authorization & Access Guard Panel</h2>
-        <label>Grant & Whitelist External Email Address Access Permissions:</label>
-        <div style="display: flex; gap: 10px; margin-bottom: 15px;">
-            <input type="text" id="whitelistEmailInput" placeholder="Enter collaborator email address (e.g., partner@gmail.com)" style="width: 75%;">
-            <button onclick="addUserSessionWhitelisting()" style="background: #2ed573; color: white; border: none; padding: 12px 24px; border-radius: 8px; font-weight: bold; cursor: pointer; text-transform: uppercase;">Allow Email</button>
+<div class="container">
+
+    <!-- Header Panel Matrix -->
+    <div class="header-panel">
+        <div>
+            <h1>AI Video Automation Hub</h1>
+            <div class="loss-prevention-banner" id="saveStateIndicator">● Timeline State Saved (Anti-Loss Cache Engine Connected)</div>
         </div>
-        <div class="status-relay">
-            <b>Active Whitelisted Authorized Identity Nodes:</b>
-            <div id="authorizedActiveLogs">✔ prolearner111@gmail.com (Master System Session Owner Active)</div>
+        <div style="display: flex; gap: 15px; align-items: center;">
+            <input type="text" id="userAccessEmail" placeholder="Admin Authorized Email" style="width: 220px;">
+            <input type="text" id="botShieldToken" placeholder="Bot Protection Token Shield" style="width: 220px;">
         </div>
     </div>
 
-    <!-- BLOCK 2: LINK INGESTION -->
-    <div class="control-block">
-        <label>🔗 Video Ingestion Source (Paste Video URL Directly):</label>
-        <input type="text" id="targetSourceUrl" placeholder="Paste YouTube link or social media source video asset stream URL sequence...">
-    </div>
-
-    <!-- BLOCK 3: CATEGORY MATRIX -->
-    <div class="control-block">
-        <label>🎭 Consolidated Strategy Grid Mixer (Select Sub-Categories):</label>
-        
-        <div class="hub-group-title">🌸 Creative Arts & Aesthetics</div>
-        <div class="sub-category-matrix">
-            <label class="matrix-item"><input type="checkbox" value="flower mehndi">🌸 Flower Mehndi</label>
-            <label class="matrix-item"><input type="checkbox" value="traditional patterns">📐 Traditional Patterns</label>
-            <label class="matrix-item"><input type="checkbox" value="bridal layouts">👑 Bridal Layouts</label>
+    <!-- Media Ingest Module -->
+    <div class="section-block">
+        <h2>🔌 Media Stream Source Ingestion Pipeline</h2>
+        <div class="form-grid-2" style="grid-template-columns: 2fr 1fr; margin-bottom: 15px;">
+            <div class="field-group">
+                <label>Source Pipeline Multi-Platform Streaming URL Link</label>
+                <input type="text" id="sourceStreamUrl" placeholder="Paste YouTube, Facebook, TikTok, Instagram, Snapchat, or Bilibili URL...">
+            </div>
+            <div class="field-group">
+                <label>Extraction Resolution Target Matrix</label>
+                <select id="canvasResolution">
+                    <option value="720">720p HD Render Path</option>
+                    <option value="1080" selected>1080p Full HD Core Resolution (Standard)</option>
+                    <option value="4k">4K Cinematic Un-watermarked Matrix</option>
+                </select>
+            </div>
         </div>
-
-        <div class="hub-group-title">💖 Human Emotion & Lifestyle</div>
-        <div class="sub-category-matrix">
-            <label class="matrix-item"><input type="checkbox" value="love romance">❤️ Love & Romance</label>
-            <label class="matrix-item"><input type="checkbox" value="emotional climax">😢 Emotional Climax</label>
-            <label class="matrix-item"><input type="checkbox" value="luxury rich">💎 Luxury & Rich</label>
-        </div>
-
-        <div class="hub-group-title">⚡ High-Impact Action & Drama</div>
-        <div class="sub-category-matrix">
-            <label class="matrix-item"><input type="checkbox" value="fight action">⚔️ Fight & Action</label>
-            <label class="matrix-item"><input type="checkbox" value="win lose">🏆 Win / Lose</label>
-            <label class="matrix-item"><input type="checkbox" value="suspense climax">🔍 Suspense & Climax</label>
-        </div>
-
-        <div class="hub-group-title">👁️ Thrill, Mystery & Humor</div>
-        <div class="sub-category-matrix">
-            <label class="matrix-item"><input type="checkbox" value="horror scary">😨 Horror & Scary</label>
-            <label class="matrix-item"><input type="checkbox" value="funny comedy">😂 Funny & Comedy</label>
-        </div>
-
-        <div class="hub-group-title">🌟 Life & Society</div>
-        <div class="sub-category-matrix">
-            <label class="matrix-item"><input type="checkbox" value="motivation inspiration">🔥 Motivation</label>
-            <label class="matrix-item"><input type="checkbox" value="office professions">💼 Office & Work</label>
-            <label class="matrix-item"><input type="checkbox" value="school university">🎓 Education Hub</label>
+        <div class="checkbox-row">
+            <input type="checkbox" id="bloggerSyncToggle" checked>
+            <label for="bloggerSyncToggle" style="color: var(--text-main); font-size:13px; cursor: pointer;">Enable Direct Blogger API Offload Connector (0% Native Storage Computing Overhead)</label>
         </div>
     </div>
 
-    <!-- BLOCK 4: TIMELINE -->
-    <div class="control-block">
-        <label>⏱️ Duration Target Framework Selector (30s to 3 Minutes Limits Allowed):</label>
-        <select id="timelineSelectFramework">
-            <option value="30-60">Short Range Segment (30 Seconds to 1 Minute)</option>
-            <option value="60-90">Standard Mid Range Preset (1 Minute to 1.30 Minutes)</option>
-            <option value="90-120" selected>Extended Output Preset (1.30 to 2 Minutes)</option>
-            <option value="120-180">Max Allowed Production Window (2 to 3 Minutes)</option>
-        </select>
-    </div>
-
-    <!-- BLOCK 5: BATCH LIMITS -->
-    <div class="control-block">
-        <label>📊 Batch Production Allocation Limits:</label>
-        <select id="batchCountAllocation">
-            <option value="3-15">Single Category Batch Mode (Extract 3 to 15 Shorts Consecutive)</option>
-            <option value="3-24" selected>Mixed Multi-Category Automation Loop (Extract 3 to 24 Shorts Output Batch)</option>
-        </select>
-    </div>
-
-    <!-- BLOCK 6: QUALITY MATRICES -->
-    <div class="control-block">
-        <label>💿 Target Render Resolution (100% Watermark Free Output):</label>
-        <select id="qualityBitrateMatrix">
-            <option value="720">Standard HD Execution Flow (720p)</option>
-            <option value="1080" selected>Commercial Premium Clear Resolution (1080p Full HD)</option>
-            <option value="4k">Max Cinematic High Definition Rendering Pipeline (4K Ultra-Bitrate)</option>
-        </select>
-    </div>
-
-    <div class="control-block" style="background: #14141a; display: flex; justify-content: space-between; align-items: center;">
-        <label style="margin-bottom: 0;">⏰ 24h Fully Automated Background Engine Loop Status:</label>
-        <select id="automationLoopToggle" style="width: auto; padding: 8px 20px;">
-            <option value="ON" selected>AUTOMATION STATUS: ACTIVE (RUNS EVERY 24H)</option>
-            <option value="OFF">AUTOMATION STATUS: SUSPENDED (MANUAL OVERRIDE ONLY)</option>
-        </select>
-    </div>
-
-    <button class="action-btn" onclick="executeCobaltExtractionRelay()">🚀 Start Watermark-Free Extraction & Ingestion Pipeline</button>
-    
-    <div style="margin-top: 30px; border-top: 2px dashed #4b5563; padding-top: 20px;">
-        <h3>💎 Hardware AI Quality Enhancement Upscaler (0% Cloud Server Costs)</h3>
-        <button class="action-btn" style="background: #3742fa;" onclick="executeLocalWebGpuUpscaler()">💎 Run Local WebGPU 4K Zero-Watermark Quality Enhancer</button>
-    </div>
-</div>
-
-<script>
-    // Toggle functional click handlers for category items matrix elements
-    document.querySelectorAll('.matrix-item').forEach(item => {
-        item.addEventListener('click', function() {
-            this.classList.toggle('selected');
-            let checkNode = this.querySelector('input');
-            if (checkNode) {
-                checkNode.checked = !checkNode.checked;
-            }
-        });
-    });
-
-    // Whitelisting secure database authorization permissions logic
-    function addUserSessionWhitelisting() {
-        var emailInput = document.getElementById('whitelistEmailInput').value;
-        if(emailInput.trim() === "" || !emailInput.includes("@")) {
-            alert("Validation Checking Failed: Please input a structurally sound target email address!");
-            return;
-        }
-        var currentLogBox = document.getElementById('authorizedActiveLogs');
-        currentLogBox.innerHTML += "<br>✔ " + emailInput + " (Authorized Access Session Whitelist Node Active)";
-        document.getElementById('whitelistEmailInput').value = "";
-        alert("Success: Access token permissions whitelisted securely for: " + emailInput);
-    }
-
-    // Pipeline runner relay trigger execution logic
-    function executeCobaltExtractionRelay() {
+    <!-- Output Duration Controls -->
+    <div class="section-block">
+        <h2>⏳ Target Timeline Multipliers Formats</h2>
+        <div class="form-grid-3">
+            <div class="field-group">
+                <label>Operational Media Target Mode</label>
+                <select id="operationModeToggle" onchange="adaptTimelineDurationDropdowns()">
+                    <option value="shorts" selected>📱 Shorts Video Mode Allocations</option>
+                    <option value="long">🎞️ Long Form Master Length Increments</option>
+                </select>
+            </div>
+            <div class="field-group">
+                <label>Duration Window Segment Limits</label>
+                <select id="shortsDurationDropdown">
