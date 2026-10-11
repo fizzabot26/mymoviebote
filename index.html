@@ -3,120 +3,278 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Premium Ultimate Multi-User Automation Hub</title>
+    <title>AI Premium Multi-User Dynamic Media Pipeline Hub</title>
     <style>
-        :root { --primary-red: #ff4757; --accent-blue: #3742fa; --bg-dark: #0a0a0d; --card-bg: #13131a; --input-bg: #252530; --text-light: #f1f2f6; --text-muted: #a4b0be; }
-        body { background: var(--bg-dark); color: var(--text-light); font-family: 'Segoe UI', Arial, sans-serif; margin: 0; padding: 0; display: flex; height: 100vh; overflow: hidden; }
+        :root { 
+            --primary-red: #ff4757; 
+            --accent-blue: #3742fa; 
+            --bg-dark: #0a0a0d; 
+            --card-bg: #13131a; 
+            --input-bg: #252530; 
+            --text-light: #f1f2f6; 
+            --text-muted: #a4b0be; 
+        }
+        
+        body { 
+            background: var(--bg-dark); 
+            color: var(--text-light); 
+            font-family: 'Segoe UI', Arial, sans-serif; 
+            margin: 0; 
+            padding: 0; 
+            display: flex; 
+            height: 100vh; 
+            overflow: hidden; 
+        }
         
         /* 📱 SIDEBAR NAVIGATION PANEL ARCHITECTURE */
-        .sidebar-panel { width: 280px; background: var(--card-bg); border-right: 2px solid #2f3542; display: flex; flex-direction: column; padding: 20px 15px; box-sizing: border-box; justify-content: space-between; }
+        .sidebar-panel { 
+            width: 290px; 
+            background: var(--card-bg); 
+            border-right: 2px solid #2f3542; 
+            display: flex; 
+            flex-direction: column; 
+            padding: 20px 15px; 
+            box-sizing: border-box; 
+            justify-content: space-between; 
+        }
         .sidebar-top { display: flex; flex-direction: column; width: 100%; }
-        .sidebar-brand { color: var(--primary-red); font-size: 18px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; text-align: center; margin-bottom: 25px; border-bottom: 2px dashed #2f3542; padding-bottom: 15px; }
-        .nav-btn { background: transparent; border: 1px solid #2f3542; color: var(--text-light); padding: 12px 15px; border-radius: 8px; font-weight: 600; font-size: 13px; text-align: left; cursor: pointer; margin-bottom: 10px; transition: 0.2s; display: flex; align-items: center; gap: 10px; width: 100%; text-transform: uppercase; }
-        .nav-btn:hover, .nav-btn.active { background: var(--primary-red); border-color: var(--primary-red); box-shadow: 0 4px 12px rgba(255, 71, 87, 0.3); }
-        .sidebar-footer-auth { border-top: 2px solid #2f3542; padding-top: 15px; display: flex; flex-direction: column; gap: 8px; }
+        .sidebar-brand { 
+            color: var(--primary-red); 
+            font-size: 18px; 
+            font-weight: bold; 
+            text-transform: uppercase; 
+            letter-spacing: 1px; 
+            text-align: center; 
+            margin-bottom: 25px; 
+            border-bottom: 2px dashed #2f3542; 
+            padding-bottom: 15px; 
+        }
+        .nav-btn { 
+            background: transparent; 
+            border: 1px solid #2f3542; 
+            color: var(--text-light); 
+            padding: 12px 15px; 
+            border-radius: 8px; 
+            font-weight: 600; 
+            font-size: 13px; 
+            text-align: left; 
+            cursor: pointer; 
+            margin-bottom: 10px; 
+            transition: 0.2s; 
+            display: flex; 
+            align-items: center; 
+            gap: 10px; 
+            width: 100%; 
+            text-transform: uppercase; 
+        }
+        .nav-btn:hover, .nav-btn.active { 
+            background: var(--primary-red); 
+            border-color: var(--primary-red); 
+            box-shadow: 0 4px 12px rgba(255, 71, 87, 0.3); 
+        }
+        .sidebar-footer-auth { 
+            border-top: 2px solid #2f3542; 
+            padding-top: 15px; 
+            display: flex; 
+            flex-direction: column; 
+            gap: 8px; 
+        }
         
-        /* 🌌 CENTRAL STUDIO DISPLAY CANVAS */
-        .main-content-window { flex: 1; display: flex; flex-direction: column; overflow-y: auto; box-sizing: border-box; }
-        .workspace-wrapper { padding: 35px; max-width: 1050px; margin: 0 auto; width: 100%; box-sizing: border-box; }
-        .control-block-card { background: var(--card-bg); padding: 25px; border-radius: 12px; border: 1px solid #2f3542; margin-bottom: 25px; box-sizing: border-box; }
-        h2 { color: var(--primary-red); font-size: 15px; text-transform: uppercase; margin-top: 0; margin-bottom: 20px; border-left: 4px solid var(--primary-red); padding-left: 10px; }
-        label { font-weight: bold; display: block; margin-bottom: 10px; color: var(--text-muted); font-size: 12px; text-transform: uppercase; }
+        /* 🌌 CENTRAL DASHBOARD DISPLAY CANVAS */
+        .main-content-window { 
+            flex: 1; 
+            display: flex; 
+            flex-direction: column; 
+            overflow-y: auto; 
+            box-sizing: border-box; 
+        }
+        .workspace-wrapper { 
+            padding: 35px; 
+            max-width: 1050px; 
+            margin: 0 auto; 
+            width: 100%; 
+            box-sizing: border-box; 
+        }
+        .control-block-card { 
+            background: var(--card-bg); 
+            padding: 25px; 
+            border-radius: 12px; 
+            border: 1px solid #2f3542; 
+            margin-bottom: 25px; 
+            box-sizing: border-box; 
+        }
+        h2 { 
+            color: var(--primary-red); 
+            font-size: 14px; 
+            text-transform: uppercase; 
+            margin-top: 0; 
+            margin-bottom: 20px; 
+            border-left: 4px solid var(--primary-red); 
+            padding-left: 10px; 
+        }
+        label { 
+            font-weight: bold; 
+            display: block; 
+            margin-bottom: 10px; 
+            color: var(--text-muted); 
+            font-size: 12px; 
+            text-transform: uppercase; 
+        }
         
-        .horizontal-filters-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 20px; }
-        .horizontal-filters-row select, .horizontal-filters-row input { width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #4b5563; background: var(--input-bg); color: #fff; font-size: 14px; box-sizing: border-box; }
+        .horizontal-filters-row { 
+            display: grid; 
+            grid-template-columns: repeat(3, 1fr); 
+            gap: 15px; 
+            margin-bottom: 20px; 
+        }
+        .horizontal-filters-row select, .horizontal-filters-row input { 
+            width: 100%; 
+            padding: 12px; 
+            border-radius: 8px; 
+            border: 1px solid #4b5563; 
+            background: var(--input-bg); 
+            color: #fff; 
+            font-size: 14px; 
+            box-sizing: border-box; 
+        }
         
-        /* CASCADING UNLOCK ANIMATION VISIBILITY PANELS */
-        .conditional-form-block { display: none; margin-top: 15px; border-top: 1px dashed #2f3542; padding-top: 20px; }
+        /* CASCADING UNLOCK SEGMENTS */
+        .conditional-form-block { 
+            display: none; 
+            margin-top: 15px; 
+            border-top: 1px dashed #2f3542; 
+            padding-top: 20px; 
+        }
         .conditional-form-block.revealed { display: block; }
         
-        .matrix-theme-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 15px; }
-        .matrix-theme-item { background: var(--input-bg); padding: 14px; border-radius: 8px; text-align: center; cursor: pointer; border: 1px solid #4b5563; font-size: 12px; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 5px; transition: 0.15s; }
-        .matrix-theme-item input { display: none; }
-        .matrix-theme-item.selected { background: var(--primary-red); border-color: var(--primary-red); color: white; box-shadow: 0 4px 10px rgba(255, 71, 87, 0.3); }
+        /* 🖱️ DRAG & DROP & UPLOAD STYLING ENGINE */
+        .drag-drop-zone-wrapper {
+            border: 2px dashed #4b5563;
+            background: var(--input-bg);
+            border-radius: 10px;
+            padding: 30px;
+            text-align: center;
+            cursor: pointer;
+            margin-bottom: 20px;
+            transition: 0.2s;
+        }
+        .drag-drop-zone-wrapper:hover, .drag-drop-zone-wrapper.dragover {
+            border-color: var(--primary-red);
+            background: rgba(255, 71, 87, 0.05);
+        }
+        .drag-drop-file-input { display: none; }
         
-        .music-player-row { display: flex; align-items: center; gap: 10px; background: var(--input-bg); padding: 12px; border-radius: 8px; border: 1px solid #2f3542; margin-top: 8px; }
-        .play-preview-btn { background: var(--accent-blue); color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 11px; font-weight: bold; }
-        .action-submit-btn { width: 100%; background: var(--primary-red); color: white; padding: 16px; border: none; border-radius: 8px; font-weight: bold; font-size: 15px; cursor: pointer; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 15px; }
+        /* AUDIO CONTROLLER SLIDERS ENGINE */
+        .audio-sliders-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-top: 15px;
+        }
+        .audio-slider-card input[type="range"] {
+            width: 100%;
+            accent-color: var(--primary-red);
+            margin-top: 5px;
+        }
+        
+        .matrix-theme-grid { 
+            display: grid; 
+            grid-template-columns: repeat(3, 1fr); 
+            gap: 10px; 
+            margin-bottom: 15px; 
+        }
+        .matrix-theme-item { 
+            background: var(--input-bg); 
+            padding: 14px; 
+            border-radius: 8px; 
+            text-align: center; 
+            cursor: pointer; 
+            border: 1px solid #4b5563; 
+            font-size: 12px; 
+            font-weight: 600; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            gap: 5px; 
+            transition: 0.15s; 
+            color: var(--text-light);
+        }
+        .matrix-theme-item input { display: none; }
+        .matrix-theme-item.selected { 
+            background: var(--primary-red); 
+            border-color: var(--primary-red); 
+            color: white; 
+            box-shadow: 0 4px 10px rgba(255, 71, 87, 0.3); 
+        }
+        
+        .music-player-row { 
+            display: flex; 
+            align-items: center; 
+            gap: 10px; 
+            background: var(--input-bg); 
+            padding: 12px; 
+            border-radius: 8px; 
+            border: 1px solid #2f3542; 
+            margin-top: 8px; 
+        }
+        .play-preview-btn { 
+            background: var(--accent-blue); 
+            color: white; 
+            border: none; 
+            padding: 6px 12px; 
+            border-radius: 4px; 
+            cursor: pointer; 
+            font-size: 11px; 
+            font-weight: bold; 
+        }
+        .action-submit-btn { 
+            width: 100%; 
+            background: var(--primary-red); 
+            color: white; 
+            padding: 16px; 
+            border: none; 
+            border-radius: 8px; 
+            font-weight: bold; 
+            font-size: 15px; 
+            cursor: pointer; 
+            text-transform: uppercase; 
+            letter-spacing: 0.5px; 
+            margin-top: 15px; 
+        }
         .app-view-panel { display: none; }
         .app-view-panel.active { display: block; }
     </style>
 </head>
 <body>
 
-    <!-- 📱 SIDEBAR NAVIGATION PANEL -->
+    <!-- 📱 SIDEBAR NAVIGATION PANEL ARCHITECTURE WITH GLOBAL CONTROLS -->
     <div class="sidebar-panel">
         <div class="sidebar-top">
-            <div class="sidebar-brand">⚙️ Automation Hub</div>
+            <div class="sidebar-brand">⚙️ Media Automation Bot</div>
             <button class="nav-btn active" onclick="switchMainDashboardViewTab('shortsStudioTabWindow', this)">📱 Shorts Studio</button>
             <button class="nav-btn" onclick="switchMainDashboardViewTab('longVideoTabWindow', this)">🎞️ Long Video Studio</button>
             <button class="nav-btn" onclick="switchMainDashboardViewTab('pictureGridTabWindow', this)">📸 Picture AI Grid</button>
-            <button class="nav-btn" onclick="switchMainDashboardViewTab('settingsPanelTabWindow', this)">🛠️ System Settings</button>
+            <button class="nav-btn" onclick="switchMainDashboardViewTab('settingsPanelTabWindow', this)">🛠️ Account Settings</button>
         </div>
         
         <div class="sidebar-footer-auth">
-            <div style="font-size: 11px; color: var(--text-muted); text-align: center; font-weight: bold; margin-bottom: 5px;">ACCOUNT PROFILE STATE</div>
-            <button class="nav-btn" style="border-color: #2ed573; color: #2ed573;" onclick="alert('Session Authorized Security Gate Active.')">👤 Verified User</button>
-            <button class="nav-btn" style="border-color: #ff4757; color: #ff4757;" onclick="alert('Logging out safely...')">🔒 Logout Security Link</button>
+            <button class="nav-btn" style="border-color: #2ed573; color: #2ed573;" onclick="alert('System Core Gate Active.')">👤 Profile Active Mode</button>
+            <button class="nav-btn" style="border-color: #ff4757; color: #ff4757;" onclick="alert('Session ended.')">🔒 System Logout</button>
         </div>
     </div>
 
-    <!-- 🌌 CENTRAL CANVAS WINDOW -->
+    <!-- 🌌 CENTRAL DASHBOARD STUDIO WINDOW -->
     <div class="main-content-window">
         <div class="workspace-wrapper">
             
-            <!-- MODE 1: SHORTS STUDIO COMPONENT -->
+            <!-- VIEW TAB 1: AUTOMATED SHORTS MATRIX INTERFACE -->
             <div id="shortsStudioTabWindow" class="app-view-panel active">
+                
+                <!-- 🖱️ NEW MODULE: DRAG & DROP AND CLICK TO UPLOAD INTERFACE ZONE -->
                 <div class="control-block-card">
-                    <h2>📱 Ingestion Matrix & Parameters Multipliers (Shorts Layout)</h2>
-                    <div class="horizontal-filters-row">
-                        <div>
-                            <label>Target Shorts Required Volume:</label>
-                            <select id="shortsCountSelectionDropdownFilter">
-                                <option value="5">Generate Batch of 5 Shorts</option>
-                                <option value="12" selected>Generate Batch of 12 Shorts Loop</option>
-                                <option value="24">Generate Batch of 24 Shorts Loop</option>
-                            </select>
+                    <h2>📥 Native Media Asset Upload Pipeline Engine</h2>
+                    <div class="drag-drop-zone-wrapper" id="canvasDragDropInteractionZone" onclick="triggerSystemFileUploadSelectorGrid()">
+                        <div style="font-size: 24px; margin-bottom: 8px;">📁</div>
+                        <div id="uploadFeedbackLabelMessage" style="font-size: 13px; font-weight: bold; color: var(--text-light);">
+                            Drag & Drop Videos/Pictures Here OR Click to Browse Device Storage
                         </div>
-                        <div>
-                            <label>Shorts Segment Specific Length:</label>
-                            <select id="shortsDurationSelectionDropdownFilter">
-                                <option value="30">30 Seconds Duration Focus</option>
-                                <option value="60" selected>60 Seconds Optimized Layout</option>
-                                <option value="90">90 Seconds Long Range Reels</option>
-                                <option value="120">120 Seconds Maximum Threshold</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label>Target Core Social Media Engine Link:</label>
-                            <select id="shortsTargetSocialPlatformDropdown" onchange="synchronizeDynamicSocialMediaAudioStreams()">
-                                <option value="NONE" disabled selected>--- Select Target Network ---</option>
-                                <option value="YOUTUBE">YouTube Shorts Portal</option>
-                                <option value="TIKTOK">TikTok Trending Feed</option>
-                                <option value="FACEBOOK">Facebook Reels Gateway</option>
-                                <option value="INSTAGRAM">Instagram Reels Matrix</option>
-                                <option value="SNAPCHAT">Snapchat Spotlight Channel</option>
-                                <option value="BILIBILI">Bilibili Native Stream Layout</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 🌍 CASCADING LAYER STEP 1: GEOLOCATION / COUNTRY TARGETING CHOICE -->
-                <div id="shortsCountryTargetSelectionBlock" class="control-block-card conditional-form-block">
-                    <h2>🌍 Step 1: Regional Demographics & Cultural Brought-Up Focus</h2>
-                    <div class="field-group">
-                        <label>Select Target Audience Country Location Node:</label>
-                        <select id="shortsGeoRegionSelectorField" onchange="unlockRegionalVocalAndAudioTtsTracks()">
-                            <option value="NONE" disabled selected>--- Choose Region/Country Target ---</option>
-                            <option value="USA">United States (Friendly, Conversational Tone Vibe)</option>
-                            <option value="UK">United Kingdom (Serious, Confident, Dignified Equivalence)</option>
-                            <option value="Germany">Germany (Formal, Structured High-Precision Logical Track)</option>
-                            <option value="China">China Network (High-Velocity Structural Engagement Hub)</option>
-                        </select>
-                    </div>
-                </div>
-
-                <!-- 🎙️ CASCADING LAYER STEP 2: COUNTRY-SPECIFIC AUDIO & VOICE CONFIGURATOR -->
-                <div id="shortsVocalAndRegionalAudioConfigurationBlock" class="control-block-card conditional-form-block">
-                    <h2>🎙️ Step 2: Adaptive Speech Engine Profiles & Regional Songs</h2>
