@@ -246,10 +246,17 @@
             <h1>AI Video Automation Hub</h1>
             <div class="loss-prevention-banner" id="saveStateIndicator">● Timeline State Saved (Anti-Loss Cache Engine Connected)</div>
         </div>
-        <div style="display: flex; gap: 15px;">
+        <div style="display: flex; gap: 15px; align-items: center;">
             <input type="text" id="userAccessEmail" placeholder="Admin Authorized Email" style="width: 220px;">
             <input type="text" id="botShieldToken" placeholder="Personal GitHub Classic Token" style="width: 220px;">
         </div>
+    </div>
+
+    <!-- MAIN ACTION PANEL POSITIONED AT TOP FOR INSTANT ACCESS -->
+    <div class="section-block" style="border: 2px solid var(--primary-accent); background: rgba(255, 71, 87, 0.02);">
+        <h2>🚀 Execution Hub Core</h2>
+        <button class="btn btn-primary" onclick="triggerAutomationIngestionPipelineExecution()">🚀 Start Watermark-Free Extraction & Ingestion Pipeline</button>
+        <button class="btn" style="background: var(--card-bg); border:1px solid var(--border-color); color:var(--text-main); width:100%; margin-top:10px; font-size:12px;" onclick="triggerLocalWebGpuQualityUpscaler()">💎 [ Trigger Local Device WebGPU Hardware Accelerator Pixel Enhancer ]</button>
     </div>
 
     <!-- Media Ingest Module -->
@@ -295,14 +302,3 @@
                     <option value="120-180">Max Production Window (2m – 3m)</option>
                 </select>
                 <select id="longDurationDropdown" style="display: none;">
-                    <option value="5">5 Minutes Production Length</option>
-                    <option value="8">8 Minutes Production Length</option>
-                    <option value="12" selected>12 Minutes Standard Feature Film</option>
-                    <option value="18">18 Minutes Premium Long Form</option>
-                    <option value="25">25 Minutes Extended Docu Format</option>
-                    <option value="30">30 Minutes High Retention Broadcast</option>
-                    <option value="45">45 Minutes Max Cinematic Timeline</option>
-                </select>
-            </div>
-            <div class="field-group">
-                <label>Video Short Goal Context Overlay</label>
