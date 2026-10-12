@@ -26,7 +26,6 @@
             overflow: hidden; 
         }
         
-        /* 📱 SIDEBAR NAVIGATION ARCHITECTURE */
         .sidebar-panel { 
             width: 290px; 
             background: var(--card-bg); 
@@ -69,7 +68,6 @@
             box-shadow: 0 4px 12px rgba(255, 71, 87, 0.3); 
         }
         
-        /* 🌌 CENTRAL CONTENT LAYER */
         .main-content-window { 
             flex: 1; 
             display: flex; 
@@ -127,7 +125,6 @@
             box-sizing: border-box; 
         }
         
-        /* 🖱️ DRAG & DROP PIPELINE BOX */
         .drag-drop-zone-wrapper {
             border: 2px dashed #4b5563;
             background: var(--input-bg);
@@ -136,14 +133,8 @@
             text-align: center;
             cursor: pointer;
             margin-bottom: 20px;
-            transition: 0.2s;
-        }
-        .drag-drop-zone-wrapper:hover, .drag-drop-zone-wrapper.dragover {
-            border-color: var(--primary-red);
-            background: rgba(255, 71, 87, 0.05);
         }
         
-        /* 🎛️ REAL-TIME CONTROLLER SLIDERS */
         .audio-sliders-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -159,10 +150,8 @@
         .audio-slider-card input[type="range"] {
             width: 100%;
             accent-color: var(--primary-red);
-            margin-top: 5px;
         }
         
-        /* 🎭 EXCLUSIVE MATRIX THEME MIXER GRID */
         .matrix-theme-grid { 
             display: grid; 
             grid-template-columns: repeat(3, 1fr); 
@@ -227,7 +216,6 @@
         
         .app-view-panel { display: none; }
         .app-view-panel.active { display: block; }
-        
         .output-console-box { background: #000; padding: 15px; border-radius: 6px; font-family: monospace; font-size: 12px; color: #2ed573; overflow-y: auto; max-height: 150px; border: 1px solid #2f3542; margin-top: 10px; }
         .ingest-row-container { display: flex; flex-direction: column; gap: 10px; margin-bottom: 15px; }
         .ingest-row-item { display: flex; gap: 10px; align-items: center; background: #1b1b24; padding: 10px; border-radius: 8px; border: 1px solid #2f3542; }
@@ -235,20 +223,20 @@
 </head>
 <body>
 
-    <!-- 📱 SIDEBAR NAVIGATION PANEL -->
+    <!-- SIDEBAR NAVIGATION PANEL -->
     <div class="sidebar-panel">
-        <div class="sidebar-top">
+        <div>
             <div class="sidebar-brand">⚙️ AI Studio Hub</div>
-            <button class="nav-btn active" id="btn-shorts" onclick="switchMainDashboardViewTab('shortsStudioTabWindow', this)">📱 Shorts Studio</button>
-            <button class="nav-btn" id="btn-long" onclick="switchMainDashboardViewTab('longVideoTabWindow', this)">🎞️ Long Video Studio</button>
-            <button class="nav-btn" id="btn-picture" onclick="switchMainDashboardViewTab('pictureGridTabWindow', this)">🖼️ Picture Enhancement</button>
+            <button class="nav-btn active" onclick="switchMainDashboardViewTab('shortsStudioTabWindow', this)">📱 Shorts Studio</button>
+            <button class="nav-btn" onclick="switchMainDashboardViewTab('longVideoTabWindow', this)">🎞️ Long Video Studio</button>
+            <button class="nav-btn" onclick="switchMainDashboardViewTab('pictureGridTabWindow', this)">🖼️ Picture Enhancement</button>
         </div>
         <div style="font-size: 11px; text-align: center; color: var(--text-muted); border-top: 1px solid #2f3542; padding-top: 10px;">
             💎 100% Free Lifetime Tier Active
         </div>
     </div>
 
-    <!-- 🌌 CENTRAL CONTENT LAYER -->
+    <!-- CENTRAL CONTENT LAYER -->
     <div class="main-content-window">
         <div class="workspace-wrapper">
             
@@ -267,5 +255,16 @@
                     </div>
                     <div>
                         <label>AI Overall Suggestion, Verification & News Engine Status:</label>
-                        <div id="aiOverallSuggestionStatusNode" style="background: var(--input-bg); padding: 12px; border-radius: 8px; border: 1px solid #2f3542; font-size: 13px; color: #2ed573; font-weight: bold;">
+                        <div id="aiOverallSuggestionStatusNode" style="background: var(--input-bg); padding: 12px; border-radius: 8px; border: 1px solid #2f3542; font-size: 12px; color: #2ed573; font-weight: bold;">
                             🔄 AI Ingestion Ready: Select a country to load real-time trend stream variables.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SHORTS DASHBOARD TAB -->
+            <div id="shortsStudioTabWindow" class="app-view-panel active">
+                <div class="control-block-card">
+                    <h2>📱 Multi-Stream Ingestion Panel (Shorts Pipeline)</h2>
+                    <div class="drag-drop-zone-wrapper">
+                        <p style="margin: 0; font-size: 13px; font-weight: bold;">📥 Drag & Drop Local Videos/Pictures here or click to browse</p>
