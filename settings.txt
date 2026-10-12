@@ -1,14 +1,30 @@
 # =====================================================================
-# 🛠️ BOT CONTROL PANEL (SETTINGS)
+# ⚙️ GLOBAL AUTOMATION HUB CENTRAL PRODUCTION SETTINGS PLATFORM
 # =====================================================================
-YOUTUBE_API_KEY = "AIzaSyBj1jf_mnloHrAFUkb--vhYnIghw2vMj7M"
-BLOG_ID = "6619804892267403764"
-HUGGINGFACE_TOKEN = "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"
+[SYSTEM_INFRASTRUCTURE]
+ENVIRONMENT_MODE = PRODUCTION
+TARGET_LIVE_NODE = https://mymoviebote.vercel.app
+LOCAL_ENGINE_PORT = 5000
+HARDWARE_ACCELERATION_NODE = WebGPU_Enabled
 
-# ⏱️ TIME & QUANTITY CONTROL (Aapki Apni Marzi)
-SHORT_DURATION_SECONDS = 60     # Kitne seconds ka clip chahiye (Example: 60 = 1 min)
-MAX_SHORTS_TO_EXTRACT = 15      # Ek lambi video se kitne shorts nikalne hain (10, 15, 20)
+[AUTOMATION_MATRIX_VOLUMETRICS]
+DEFAULT_BATCH_SHORTS_COUNT = 12
+TIMELINE_MAX_LIMIT_SECONDS = 60
+DEFAULT_DISTRIBUTION_NETWORK = YOUTUBE
 
-# 24-HOUR AUTOMATION SWITCH
-ENABLE_24_HOUR_AUTOMATION = True  # True = Har waqt cloud par khud chale | False = Off
-# =====================================================================
+[SOCIO_PSYCHOLOGICAL_BLUEPRINT]
+DEFAULT_REGIONAL_DEMOGRAPHIC = UK
+GOAL_DELIVERY_CONTEXT_OVERLAY = COMMENTARY
+CRASH_RECOVERY_SAFE_MODE = FALSE
+
+[STRICT_PRODUCTION_THEME_CLUSTERS]
+CLUSTER_01 = flower_mehndi
+CLUSTER_02 = bridal_layouts
+CLUSTER_03 = fight_argue
+CLUSTER_04 = love_romance
+CLUSTER_05 = funny_comedy
+CLUSTER_06 = horror_suspense
+
+[INTEGRATED_STORAGE_PIPELINE]
+OFFLOAD_ENGINE_TARGET = BLOGGER_API
+CLOUD_SERVER_SPACE_LOAD_PERCENT = 0%
