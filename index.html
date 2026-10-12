@@ -228,9 +228,6 @@
         .app-view-panel { display: none; }
         .app-view-panel.active { display: block; }
         
-        .conditional-form-block { display: none; margin-top: 15px; border-top: 1px dashed #2f3542; padding-top: 20px; }
-        .conditional-form-block.revealed { display: block; }
-        
         .output-console-box { background: #000; padding: 15px; border-radius: 6px; font-family: monospace; font-size: 12px; color: #2ed573; overflow-y: auto; max-height: 150px; border: 1px solid #2f3542; margin-top: 10px; }
         .ingest-row-container { display: flex; flex-direction: column; gap: 10px; margin-bottom: 15px; }
         .ingest-row-item { display: flex; gap: 10px; align-items: center; background: #1b1b24; padding: 10px; border-radius: 8px; border: 1px solid #2f3542; }
@@ -270,3 +267,5 @@
                     </div>
                     <div>
                         <label>AI Overall Suggestion, Verification & News Engine Status:</label>
+                        <div id="aiOverallSuggestionStatusNode" style="background: var(--input-bg); padding: 12px; border-radius: 8px; border: 1px solid #2f3542; font-size: 13px; color: #2ed573; font-weight: bold;">
+                            🔄 AI Ingestion Ready: Select a country to load real-time trend stream variables.
