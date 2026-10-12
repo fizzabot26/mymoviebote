@@ -230,6 +230,10 @@
         
         .conditional-form-block { display: none; margin-top: 15px; border-top: 1px dashed #2f3542; padding-top: 20px; }
         .conditional-form-block.revealed { display: block; }
+        
+        .output-console-box { background: #000; padding: 15px; border-radius: 6px; font-family: monospace; font-size: 12px; color: #2ed573; overflow-y: auto; max-height: 150px; border: 1px solid #2f3542; margin-top: 10px; }
+        .ingest-row-container { display: flex; flex-direction: column; gap: 10px; margin-bottom: 15px; }
+        .ingest-row-item { display: flex; gap: 10px; align-items: center; background: #1b1b24; padding: 10px; border-radius: 8px; border: 1px solid #2f3542; }
     </style>
 </head>
 <body>
@@ -238,38 +242,29 @@
     <div class="sidebar-panel">
         <div class="sidebar-top">
             <div class="sidebar-brand">⚙️ AI Studio Hub</div>
-            <button class="nav-btn active" onclick="switchMainDashboardViewTab('shortsStudioTabWindow', this)">📱 Shorts Studio</button>
-            <button class="nav-btn" onclick="switchMainDashboardViewTab('longVideoTabWindow', this)">🎞️ Long Video Studio</button>
-            <button class="nav-btn" onclick="switchMainDashboardViewTab('pictureGridTabWindow', this)">📸 Picture AI Grid</button>
-            <button class="nav-btn" onclick="switchMainDashboardViewTab('settingsPanelTabWindow', this)">🛠️ Hub Settings</button>
+            <button class="nav-btn active" id="btn-shorts" onclick="switchMainDashboardViewTab('shortsStudioTabWindow', this)">📱 Shorts Studio</button>
+            <button class="nav-btn" id="btn-long" onclick="switchMainDashboardViewTab('longVideoTabWindow', this)">🎞️ Long Video Studio</button>
+            <button class="nav-btn" id="btn-picture" onclick="switchMainDashboardViewTab('pictureGridTabWindow', this)">🖼️ Picture Enhancement</button>
         </div>
-        <div class="sidebar-footer-auth" style="border-top: 2px solid #2f3542; padding-top: 15px;">
-            <button class="nav-btn" style="border-color: #2ed573; color: #2ed573;" onclick="alert('Hardware Secure Sync Node Active.')">👤 State: Active</button>
+        <div style="font-size: 11px; text-align: center; color: var(--text-muted); border-top: 1px solid #2f3542; padding-top: 10px;">
+            💎 100% Free Lifetime Tier Active
         </div>
     </div>
 
-    <!-- 🌌 CENTRAL CANVAS MAIN HUB DISPLAY -->
+    <!-- 🌌 CENTRAL CONTENT LAYER -->
     <div class="main-content-window">
         <div class="workspace-wrapper">
             
-            <!-- VIEW VIEW 1: SHORTS AUTOMATION HUB -->
-            <div id="shortsStudioTabWindow" class="app-view-panel active">
-                
-                <!-- PIPELINE INPUT STREAM SOURCE -->
-                <div class="control-block-card">
-                    <h2>📥 Media Ingestion Data Pipeline</h2>
-                    <div style="margin-bottom: 20px;">
-                        <label>Source Multi-Platform Video Streaming URL Link:</label>
-                        <input type="text" id="mediaSourcePipelineUrlLinkInput" style="width:100%; padding:12px; border-radius:8px; border:1px solid #4b5563; background:var(--input-bg); color:#fff;" placeholder="Paste YouTube, TikTok, Instagram, Snapchat or Bilibili URL stream here...">
-                    </div>
-                    
-                    <label>Or Drop Local Source Files Directly:</label>
-                    <div class="drag-drop-zone-wrapper" id="canvasDragDropInteractionZone" onclick="triggerSystemFileUploadSelectorGrid()">
-                        <div style="font-size: 28px; margin-bottom: 8px;">📁</div>
-                        <div id="uploadFeedbackLabelMessage" style="font-size: 13px; font-weight: bold;">
-                            Drag & Drop Videos/Pictures Here OR Click to Browse Device Storage
-                        </div>
-                        <input type="file" id="hiddenNativeMediaAssetInputSlot" multiple style="display:none;" onchange="processSelectedMediaFilesMetadata(this)">
-                    </div>
-                </div>
-
+            <!-- COUNTRY & REGION TARGET HUB -->
+            <div class="control-block-card">
+                <h2>🌍 Global Audience Target & Regional Psyche Mapping</h2>
+                <div class="horizontal-filters-row" style="grid-template-columns: 1fr 1fr;">
+                    <div>
+                        <label>Select Target Country/Region:</label>
+                        <select id="globalRegionFilterDropdown" onchange="synchronizeGlobalMarketIntelligenceNodes()">
+                            <option value="USA" selected>USA (Friendly, Direct, Straightforward Vibe)</option>
+                            <option value="Europe">Europe Hub (Serious, Confident, Dignified Stance)</option>
+                            <option value="Germany">Germany Hub (Formal, High-Precision Logical Track)</option>
+                            <option value="Canada">Canada Focus (Warm, Polite, High Retention)</option>
+                            <option value="Russia">Russia Region (Deep, Concentrated Analytical Focus)</option>
+                            <option value="China">China Network (High-Velocity Structural Engagement)</option>
