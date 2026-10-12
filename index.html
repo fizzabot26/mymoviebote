@@ -1,269 +1,249 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Ultimate Production Panel</title>
-    <style>
-        :root { 
-            --primary-red: #ff4757; 
-            --accent-blue: #3742fa; 
-            --bg-dark: #0a0a0d; 
-            --card-bg: #13131a; 
-            --input-bg: #252530; 
-            --text-light: #f1f2f6; 
-            --text-muted: #a4b0be; 
-        }
-        
-        body { 
-            background: var(--bg-dark); 
-            color: var(--text-light); 
-            font-family: 'Segoe UI', Arial, sans-serif; 
-            margin: 0; 
-            padding: 0; 
-            display: flex; 
-            height: 100vh; 
-            overflow: hidden; 
-        }
-        
-        .sidebar-panel { 
-            width: 290px; 
-            background: var(--card-bg); 
-            border-right: 2px solid #2f3542; 
-            display: flex; 
-            flex-direction: column; 
-            padding: 20px 15px; 
-            box-sizing: border-box; 
-            justify-content: space-between; 
-        }
-        .sidebar-brand { 
-            color: var(--primary-red); 
-            font-size: 18px; 
-            font-weight: bold; 
-            text-transform: uppercase; 
-            letter-spacing: 1px; 
-            text-align: center; 
-            margin-bottom: 25px; 
-            border-bottom: 2px dashed #2f3542; 
-            padding-bottom: 15px; 
-        }
-        .nav-btn { 
-            background: transparent; 
-            border: 1px solid #2f3542; 
-            color: var(--text-light); 
-            padding: 12px 15px; 
-            border-radius: 8px; 
-            font-weight: 600; 
-            font-size: 13px; 
-            text-align: left; 
-            cursor: pointer; 
-            margin-bottom: 10px; 
-            transition: 0.2s; 
-            width: 100%; 
-            text-transform: uppercase; 
-        }
-        .nav-btn:hover, .nav-btn.active { 
-            background: var(--primary-red); 
-            border-color: var(--primary-red); 
-            box-shadow: 0 4px 12px rgba(255, 71, 87, 0.3); 
-        }
-        
-        .main-content-window { 
-            flex: 1; 
-            display: flex; 
-            flex-direction: column; 
-            overflow-y: auto; 
-            box-sizing: border-box; 
-        }
-        .workspace-wrapper { 
-            padding: 35px; 
-            max-width: 1050px; 
-            margin: 0 auto; 
-            width: 100%; 
-            box-sizing: border-box; 
-        }
-        .control-block-card { 
-            background: var(--card-bg); 
-            padding: 25px; 
-            border-radius: 12px; 
-            border: 1px solid #2f3542; 
-            margin-bottom: 25px; 
-            box-sizing: border-box; 
-        }
-        h2 { 
-            color: var(--primary-red); 
-            font-size: 14px; 
-            text-transform: uppercase; 
-            margin-top: 0; 
-            margin-bottom: 20px; 
-            border-left: 4px solid var(--primary-red); 
-            padding-left: 10px; 
-        }
-        label { 
-            font-weight: bold; 
-            display: block; 
-            margin-bottom: 10px; 
-            color: var(--text-muted); 
-            font-size: 12px; 
-            text-transform: uppercase; 
-        }
-        
-        .horizontal-filters-row { 
-            display: grid; 
-            grid-template-columns: repeat(3, 1fr); 
-            gap: 15px; 
-            margin-bottom: 20px; 
-        }
-        .horizontal-filters-row select, .horizontal-filters-row input { 
-            width: 100%; 
-            padding: 12px; 
-            border-radius: 8px; 
-            border: 1px solid #4b5563; 
-            background: var(--input-bg); 
-            color: #fff; 
-            font-size: 14px; 
-            box-sizing: border-box; 
-        }
-        
-        .drag-drop-zone-wrapper {
-            border: 2px dashed #4b5563;
-            background: var(--input-bg);
-            border-radius: 10px;
-            padding: 35px;
-            text-align: center;
-            cursor: pointer;
-            margin-bottom: 20px;
-        }
-        
-        .audio-sliders-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 15px;
-            margin-top: 15px;
-        }
-        .audio-slider-card {
-            background: #1c1c24;
-            padding: 12px;
-            border-radius: 8px;
-            border: 1px solid #2f3542;
-        }
-        .audio-slider-card input[type="range"] {
-            width: 100%;
-            accent-color: var(--primary-red);
-        }
-        
-        .matrix-theme-grid { 
-            display: grid; 
-            grid-template-columns: repeat(3, 1fr); 
-            gap: 10px; 
-            margin-bottom: 15px; 
-        }
-        .matrix-theme-item { 
-            background: var(--input-bg); 
-            padding: 14px; 
-            border-radius: 8px; 
-            text-align: center; 
-            cursor: pointer; 
-            border: 1px solid #4b5563; 
-            font-size: 12px; 
-            font-weight: 600; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            gap: 5px; 
-            color: var(--text-light);
-            user-select: none;
-            transition: 0.15s;
-        }
-        .matrix-theme-item input { display: none; }
-        .matrix-theme-item.selected { 
-            background: var(--primary-red); 
-            border-color: var(--primary-red); 
-            color: #fff;
-        }
-        
-        .music-player-row { 
-            display: flex; 
-            align-items: center; 
-            gap: 10px; 
-            background: var(--input-bg); 
-            padding: 12px; 
-            border-radius: 8px; 
-            border: 1px solid #2f3542; 
-            margin-top: 8px; 
-        }
-        .play-preview-btn { 
-            background: var(--accent-blue); 
-            color: white; 
-            border: none; 
-            padding: 6px 12px; 
-            border-radius: 4px; 
-            cursor: pointer; 
-        }
-        .action-submit-btn { 
-            width: 100%; 
-            background: var(--primary-red); 
-            color: white; 
-            padding: 16px; 
-            border: none; 
-            border-radius: 8px; 
-            font-weight: bold; 
-            font-size: 15px; 
-            cursor: pointer; 
-            text-transform: uppercase; 
-            margin-top: 15px; 
-        }
-        
-        .app-view-panel { display: none; }
-        .app-view-panel.active { display: block; }
-        .output-console-box { background: #000; padding: 15px; border-radius: 6px; font-family: monospace; font-size: 12px; color: #2ed573; overflow-y: auto; max-height: 150px; border: 1px solid #2f3542; margin-top: 10px; }
-        .ingest-row-container { display: flex; flex-direction: column; gap: 10px; margin-bottom: 15px; }
-        .ingest-row-item { display: flex; gap: 10px; align-items: center; background: #1b1b24; padding: 10px; border-radius: 8px; border: 1px solid #2f3542; }
-    </style>
-</head>
-<body>
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AI Studio Hub</title>
+<style>
+:root{--bg:#0b0b0f;--p:#14141b;--p2:#1c1c26;--b:#2a2a38;--t:#e8e8f0;--m:#9a9ab0;--a:#ff3b5c}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--t);font:14px system-ui,sans-serif;display:grid;grid-template-columns:230px 1fr;min-height:100vh}
+aside{background:var(--p);border-right:1px solid var(--b);padding:14px;position:sticky;top:0;height:100vh;overflow:auto}
+aside h1{font-size:16px;color:var(--a);margin:0 0 14px}
+nav button{display:block;width:100%;text-align:left;margin:0 0 6px;padding:10px;border-radius:8px;border:1px solid var(--b);background:var(--p2);color:var(--t);cursor:pointer}
+nav button.on{background:var(--a);border-color:var(--a)}
+main{padding:16px;min-width:0}
+#top{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.chip{padding:6px 12px;border-radius:99px;border:1px solid var(--b);background:var(--p);color:var(--m);cursor:pointer;font-size:12px}
+.chip.on{background:var(--a);border-color:var(--a);color:#fff}
+.card{background:var(--p);border:1px solid var(--b);border-radius:12px;padding:16px;margin-bottom:14px}
+.card h2{margin:0 0 12px;font-size:13px;color:var(--a);text-transform:uppercase;border-left:3px solid var(--a);padding-left:8px}
+label{display:block;font-size:12px;color:var(--m);margin:8px 0 4px}
+input,select,textarea{width:100%;padding:9px;border-radius:8px;border:1px solid var(--b);background:var(--p2);color:var(--t);font:inherit}
+.row{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.btn{padding:10px 16px;border:0;border-radius:8px;background:var(--a);color:#fff;font-weight:600;cursor:pointer;margin-top:12px}
+.btn.g{background:var(--p2);border:1px solid var(--b)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px}
+.grid video,.grid img{width:100%;border-radius:8px;background:#000}
+.view{display:none}.view.on{display:block}
+#msg{padding:10px;border-radius:8px;background:var(--p2);color:var(--m);margin-top:10px;display:none}
+pre{white-space:pre-wrap;background:var(--p2);padding:10px;border-radius:8px}
+a{color:#7cc4ff}small{color:var(--m)}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:#777;margin-right:6px}
+@media(max-width:760px){body{grid-template-columns:1fr}aside{position:static;height:auto}nav{display:flex;gap:6px;overflow:auto}nav button{white-space:nowrap;width:auto}}
+</style></head><body>
+<aside><h1>AI STUDIO HUB</h1><nav id="nav"></nav>
+<p style="margin-top:14px"><small><span class="dot" id="dot"></span><span id="st">backend check...</span></small></p>
+<p><small id="who">Guest</small></p></aside>
+<main>
+<div id="top"></div>
+<div id="msg"></div>
 
-    <!-- SIDEBAR NAVIGATION PANEL -->
-    <div class="sidebar-panel">
-        <div>
-            <div class="sidebar-brand">⚙️ AI Studio Hub</div>
-            <button class="nav-btn active" onclick="switchMainDashboardViewTab('shortsStudioTabWindow', this)">📱 Shorts Studio</button>
-            <button class="nav-btn" onclick="switchMainDashboardViewTab('longVideoTabWindow', this)">🎞️ Long Video Studio</button>
-            <button class="nav-btn" onclick="switchMainDashboardViewTab('pictureGridTabWindow', this)">🖼️ Picture Enhancement</button>
-        </div>
-        <div style="font-size: 11px; text-align: center; color: var(--text-muted); border-top: 1px solid #2f3542; padding-top: 10px;">
-            💎 100% Free Lifetime Tier Active
-        </div>
-    </div>
+<section class="view" id="v-studio">
+ <div class="card"><h2 id="stTitle">Clip Extractor</h2>
+  <div class="row"><div><label>Video link</label><input id="url" placeholder="https://youtube.com/watch?v=..."></div>
+  <div><label>Ya video upload karo</label><input id="file" type="file" accept="video/*"></div></div>
+  <div class="row"><div><label>Timeline: start (mm:ss)</label><input id="t0" placeholder="0:00"></div>
+  <div><label>Timeline: end (mm:ss, khali = poori)</label><input id="t1" placeholder="khali"></div></div>
+  <video id="prev" controls style="width:100%;max-height:260px;margin-top:10px;display:none;background:#000"></video>
+ </div>
+ <div class="card"><h2>Clip settings</h2>
+  <div class="row"><div><label>Clip length</label><select id="dur"></select></div>
+  <div><label>Kitni clips</label><input id="count" type="number" min="1" max="12" value="3"></div>
+  <div><label>Category mode</label><select id="mix"><option value="single">Har clip = ek category</option><option value="mixed">Har clip me mixed categories</option></select></div></div>
+  <label>Categories (ek ya zyada)</label><div id="cats"></div>
+  <label><input id="vert" type="checkbox" style="width:auto" checked> Vertical 9:16 (shorts)</label>
+  <button class="btn" id="go">Clips nikalo</button>
+  <div id="prog" style="margin-top:10px;color:var(--m)"></div>
+ </div>
+ <div class="card"><h2>Voice &amp; Music (optional)</h2>
+  <div class="row"><div><label>Audio</label><select id="aud"><option value="orig">Original sound rakho</option><option value="tts">TTS voice banao</option></select></div>
+  <div><label>Platform</label><select id="plat"><option>YouTube</option><option>Instagram</option><option>TikTok</option><option>Facebook</option><option>Snapchat</option><option>Bilibili</option></select></div></div>
+  <div id="musicBox"></div>
+  <div id="ttsBox" style="display:none"></div>
+ </div>
+ <div class="card"><h2>Results</h2><div class="grid" id="res"></div></div>
+</section>
 
-    <!-- CENTRAL CONTENT LAYER -->
-    <div class="main-content-window">
-        <div class="workspace-wrapper">
-            
-            <!-- COUNTRY & REGION TARGET HUB -->
-            <div class="control-block-card">
-                <h2>🌍 Global Audience Target & Regional Psyche Mapping</h2>
-                <div class="horizontal-filters-row" style="grid-template-columns: 1fr 1fr;">
-                    <div>
-                        <label>Select Target Country/Region:</label>
-                        <select id="globalRegionFilterDropdown" onchange="synchronizeGlobalMarketIntelligenceNodes()">
-                            <option value="USA" selected>USA (Friendly, Direct, Straightforward Vibe)</option>
-                            <option value="Europe">Europe Hub (Serious, Confident, Dignified Stance)</option>
-                            <option value="Germany">Germany Hub (Formal, High-Precision Logical Track)</option>
-                            <option value="Canada">Canada Focus (Warm, Polite, High Retention)</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label>AI Overall Suggestion, Verification & News Engine Status:</label>
-                        <div id="aiOverallSuggestionStatusNode" style="background: var(--input-bg); padding: 12px; border-radius: 8px; border: 1px solid #2f3542; font-size: 12px; color: #2ed573; font-weight: bold;">
-                            🔄 AI Ingestion Ready: Select a country to load real-time trend stream variables.
-                        </div>
-                    </div>
-                </div>
-            </div>
+<section class="view" id="v-gen"><div class="card"><h2 id="gT"></h2><div id="gF"></div>
+ <video id="gprev" controls style="width:100%;max-height:260px;margin-top:10px;display:none;background:#000"></video>
+ <div id="tlw" style="display:none"><div style="position:relative;height:26px;background:var(--p2);border-radius:6px;margin-top:10px"><div id="tlr" style="position:absolute;top:0;bottom:0;background:var(--a);opacity:.5"></div></div>
+ <input type="range" id="r0" min="0" max="100" step="0.1" value="0"><input type="range" id="r1" min="0" max="100" step="0.1" value="100"></div>
+ <div id="gprog" style="margin-top:10px;color:var(--m)"></div></div>
+ <div class="card"><h2>Output</h2><div class="grid" id="gres"></div></div></section>
+<section class="view" id="v-maker"><div class="card"><h2>AI voice, music &amp; sound effects</h2><div id="mk"></div></div></section>
+<section class="view" id="v-regen"><div class="card"><h2>Video regeneration / expanding</h2>
+ <label>Original script ya topic paste karo</label><textarea id="rg" rows="6"></textarea>
+ <button class="btn" id="rgGo">Naya script banao</button><div id="rgOut"></div></div></section>
 
-            <!-- SHORTS DASHBOARD TAB WINDOW -->
-            <div id="shortsStudioTabWindow" class="app-view-panel active">
-                <div class="control-block-card">
-                    <h2>📱 Multi-Stream Ingestion Panel (Shorts Pipeline)</h2>
-                    <div class="drag-drop-zone-wrapper">
+<section class="view" id="v-rev"><div class="card"><h2>Channel reverse engineering</h2>
+ <label>Channel / video link</label><input id="rv" placeholder="https://youtube.com/@channel">
+ <button class="btn" id="rvGo">Analyze + naye titles/script</button><div id="rvOut"></div></div></section>
+
+<section class="view" id="v-trend"><div class="card"><h2>Top performing niches (region ke mutabiq)</h2>
+ <div class="row"><div><label>Niche</label><select id="tn"></select></div></div>
+ <button class="btn" id="tnGo">Refresh</button><div id="tnOut" class="grid" style="margin-top:12px"></div></div></section>
+
+<section class="view" id="v-hist"><div class="card"><h2>Previous work (5 din baad trash)</h2><div id="hist"></div></div></section>
+
+<section class="view" id="v-set">
+ <div class="card"><h2>Connections</h2>
+  <label>Backend URL (Hugging Face Space)</label><input id="sApi" placeholder="https://username-space.hf.space">
+  <label>YouTube Data API key (trends ke liye)</label><input id="sYt">
+  <label>Supabase URL (email login, optional)</label><input id="sSu">
+  <label>Supabase anon key</label><input id="sSk">
+  <button class="btn" id="sSave">Save</button></div>
+ <div class="card"><h2>Account</h2>
+  <label>Email</label><input id="em" type="email" placeholder="you@example.com">
+  <button class="btn" id="login">Login link bhejo</button> <button class="btn g" id="logout">Logout</button>
+  <button class="btn g" id="wipe">Local data delete</button><p><small id="acc"></small></p></div>
+</section>
+</main>
+<script>
+"use strict";
+const $=s=>document.querySelector(s),$$=s=>Array.from(document.querySelectorAll(s));
+const S=(k,d)=>{try{const v=localStorage.getItem(k);return v===null?d:v}catch(e){return d}};
+const W=(k,v)=>{try{localStorage.setItem(k,v)}catch(e){}};
+const REG={USA:'US',Canada:'CA',Europe:'FR',UK:'GB',Gulf:'AE',China:'HK',Japan:'JP',Korea:'KR',Russia:'RU',Germany:'DE',Scandinavia:'SE',Singapore:'SG'};
+const CATS=['Motivation','Horror','Romance','Comedy','Fight/Argue','Commentary','Education','Mehndi/Bridal','Sports','News','Gaming','Music'];
+const YT={All:'',Music:10,Gaming:20,Comedy:23,Entertainment:24,News:25,Education:27,Sports:17,'How-to':26};
+const NAV=[['short','Short clips'],['long','Long clips'],['regen','Video regeneration'],['rev','Reverse engineering'],['enhance','Quality enhance'],['expand','Expand video'],['edit','Timeline editor'],['maker','AI voice / music / SFX'],['anim','Animation video'],['trend','Top niches'],['hist','Previous work'],['set','Settings']];
+const MUSIC={YouTube:[['YouTube Audio Library','https://studio.youtube.com'],['Pixabay Music','https://pixabay.com/music/']],Instagram:[['Pixabay Music','https://pixabay.com/music/'],['Mixkit','https://mixkit.co/free-stock-music/']],TikTok:[['Pixabay Music','https://pixabay.com/music/'],['Mixkit','https://mixkit.co/free-stock-music/']],Facebook:[['Pixabay Music','https://pixabay.com/music/'],['Free Music Archive','https://freemusicarchive.org/']],Snapchat:[['Pixabay Music','https://pixabay.com/music/'],['Mixkit','https://mixkit.co/free-stock-music/']],Bilibili:[['Pixabay Music','https://pixabay.com/music/'],['Free Music Archive','https://freemusicarchive.org/']]};
+let region=S('region','USA'),kind='short',sb=null,user=null;
+const base=()=>S('api','').replace(/\/$/,'');
+function say(t,err){const m=$('#msg');m.style.display=t?'block':'none';m.textContent=t||'';m.style.color=err?'#ff7b7b':'';}
+async function api(p,o){if(!base())throw new Error('Pehle Settings me Backend URL daalo');const r=await fetch(base()+p,o);if(!r.ok)throw new Error((await r.text()).slice(0,300));return r.json()}
+const post=(p,b)=>api(p,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(b)});
+const tsec=v=>{v=(v||'').trim();if(!v)return 0;const a=v.split(':').map(Number);return a.reduce((x,y)=>x*60+(y||0),0)||0};
+const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+function go(v){
+  const view=(v==='short'||v==='long')?'studio':(TOOLS[v]?'gen':v);kind=(v==='long')?'long':'short';
+  $$('.view').forEach(e=>e.classList.toggle('on',e.id==='v-'+view));
+  $$('#nav button').forEach(b=>b.classList.toggle('on',b.dataset.v===v));
+  say('');if(TOOLS[v])renderTool(v);if(v==='maker')loadVoices('m');
+  if(view==='studio'){
+    $('#stTitle').textContent=kind==='long'?'Long video clip extractor (5-45 min)':'Short video clip extractor (30s-3 min)';
+    const o=kind==='long'?[[300,'5 min'],[600,'10 min'],[1200,'20 min'],[1800,'30 min'],[2700,'45 min']]:[[30,'30 sec'],[60,'60 sec'],[90,'90 sec'],[120,'2 min'],[180,'3 min']];
+    $('#dur').innerHTML=o.map(x=>'<option value="'+x[0]+'">'+x[1]+'</option>').join('');
+    $('#vert').parentElement.style.display=kind==='long'?'none':'block';
+  }
+  if(v==='trend')trends();if(v==='hist')hist();if(v==='set')loadSet();
+}
+function buildUI(){
+  $('#nav').innerHTML=NAV.map(n=>'<button data-v="'+n[0]+'">'+n[1]+'</button>').join('');
+  $$('#nav button').forEach(b=>b.onclick=()=>go(b.dataset.v));
+  $('#top').innerHTML='<label style="margin:0">Region: <select id="region" style="width:auto;display:inline-block">'+Object.keys(REG).map(r=>'<option'+(r===region?' selected':'')+'>'+r+'</option>').join('')+'</select></label>';
+  $('#region').onchange=e=>{region=e.target.value;W('region',region);loadVoices('s');loadVoices('m');if($('#v-trend').classList.contains('on'))trends()};
+  $('#cats').innerHTML=CATS.map(c=>'<span class="chip" data-c="'+c+'">'+c+'</span>').join(' ');
+  $$('#cats .chip').forEach(c=>c.onclick=()=>c.classList.toggle('on'));
+  $('#tn').innerHTML=Object.keys(YT).map(k=>'<option>'+k+'</option>').join('');
+  $('#plat').onchange=music;$('#aud').onchange=()=>{$('#ttsBox').style.display=$('#aud').value==='tts'?'block':'none';loadVoices('s')};
+  music();
+  $('#file').onchange=e=>{const f=e.target.files[0],p=$('#prev');if(f){p.src=URL.createObjectURL(f);p.style.display='block'}else p.style.display='none'};
+  $('#go').onclick=runClips;$('#rgGo').onclick=doRegen;$('#rvGo').onclick=doRev;$('#tnGo').onclick=trends;
+  $('#sSave').onclick=saveSet;$('#login').onclick=login;$('#logout').onclick=logout;$('#wipe').onclick=()=>{try{localStorage.clear()}catch(e){}say('Local data delete ho gaya')};
+}
+function music(){const l=MUSIC[$('#plat').value]||[];$('#musicBox').innerHTML='<small>Copyright-free music sources: </small>'+l.map(x=>'<a target="_blank" rel="noopener" href="'+x[1]+'">'+x[0]+'</a>').join(' · ')}
+const TOOLS={
+ enhance:{t:'Video quality enhance (denoise + sharpen + upscale)',file:1,f:[['height','select','Output height',['1080','720']]]},
+ expand:{t:'Expand video (blur-fill ratio ya duration extend)',file:1,f:[['mode','select','Mode',['ratio','extend']],['ratio','select','Ratio (blur fill)',['16:9','9:16','1:1']],['seconds','number','Extend mode: total seconds',60]]},
+ edit:{t:'Timeline editor: manual trim/speed + AI content regenerate',file:1,tl:1,f:[['start','number','Start (sec)',0],['end','number','End (sec, 0 = end tak)',0],['speed','select','Speed',['1','0.5','0.75','1.25','1.5','2']],['mute','check','Original audio mute'],['voice','text','Voice/music file path (optional)','']]},
+ anim:{t:'AI animation video (AI images + voice)',f:[['topic','textarea','Topic ya script',''],['category','select','Category',CATS],['scenes','number','Scenes (3-8)',4],['gender','select','Gender',['Female','Male']],['age','select','Age',['Child','Teen','Adult','Senior']],['voice','text','Voice id (khali = auto)','']]}
+};
+function renderTool(v){
+  const t=TOOLS[v];$('#gT').textContent=t.t;$('#gres').innerHTML='';$('#gprog').textContent='';
+  $('#gF').innerHTML=(t.file?'<label>Video file'+(v==='edit'&&window.editSrc?' (khali chhodo to pichli clip use hogi: '+esc(window.editSrc)+')':'')+'</label><input id="gfile" type="file" accept="video/*">':'')+t.f.map(x=>{const id='g_'+x[0];let i;
+   if(x[1]==='select')i='<select id="'+id+'">'+x[3].map(o=>'<option>'+o+'</option>').join('')+'</select>';
+   else if(x[1]==='textarea')i='<textarea id="'+id+'" rows="4"></textarea>';
+   else if(x[1]==='check')return '<label><input id="'+id+'" type="checkbox" style="width:auto"> '+x[2]+'</label>';
+   else i='<input id="'+id+'" type="'+x[1]+'" value="'+esc(x[3])+'">';
+   return '<label>'+x[2]+'</label>'+i}).join('')+'<button class="btn" id="gGo">Run</button> <button class="btn g" id="gAi" style="display:'+(v==='edit'?'inline-block':'none')+'">AI regenerate content</button>';
+  const pv=$('#gprev');pv.style.display='none';$('#tlw').style.display=t.tl?'block':'none';
+  if(v==='edit'&&window.vFile)$('#g_voice').value=window.vFile;
+  const setSrc=u=>{pv.src=u;pv.style.display='block'};
+  if(v==='edit'&&window.editSrc)setSrc(base()+window.editSrc);
+  if(t.file)$('#gfile').onchange=e=>{const f=e.target.files[0];if(f){window.editSrc='';setSrc(URL.createObjectURL(f))}};
+  if(t.tl){
+    const up=()=>{const d=pv.duration||100,a=+$('#r0').value,b=+$('#r1').value;$('#tlr').style.left=(a/d*100)+'%';$('#tlr').style.width=Math.max(0,(b-a)/d*100)+'%';$('#g_start').value=a;$('#g_end').value=(b>=d-0.2?0:b)};
+    pv.onloadedmetadata=()=>{$('#r0').max=$('#r1').max=pv.duration;$('#r0').value=0;$('#r1').value=pv.duration;up()};
+    $('#r0').oninput=()=>{if(+$('#r0').value>+$('#r1').value)$('#r1').value=$('#r0').value;pv.currentTime=+$('#r0').value;up()};$('#r1').oninput=()=>{if(+$('#r1').value<+$('#r0').value)$('#r0').value=$('#r1').value;pv.currentTime=+$('#r1').value;up()};
+  }
+  $('#gGo').onclick=async()=>{
+    const p={region};t.f.forEach(x=>{const e=$('#g_'+x[0]);p[x[0]]=x[1]==='check'?e.checked:e.value});
+    const fd=new FormData(),f=t.file&&$('#gfile').files[0];if(f)fd.append('file',f);else if(window.editSrc)p.src=window.editSrc;
+    fd.append('p',JSON.stringify(p));$('#gres').innerHTML='';$('#gGo').disabled=true;
+    try{const r=await api('/api/tool/'+v,{method:'POST',body:fd});for(;;){const j=await api('/api/jobs/'+r.job);$('#gprog').textContent=j.msg;if(j.status==='error')throw new Error(j.msg);if(j.status==='done'){show(j.clips,'#gres');saveHist({t:Date.now(),kind:v,src:v,clips:j.clips});break}await new Promise(x=>setTimeout(x,3000))}}catch(e){say(e.message,1)}finally{$('#gGo').disabled=false}
+  };
+  $('#gAi').onclick=async()=>{
+    const tp=prompt('Naya content/topic likho (AI script + voice bana kar video par lagegi)');if(!tp)return;
+    try{say('AI script + voice ban rahi hai...');const s=await post('/api/script',{topic:tp,category:'Commentary',region});const a=await post('/api/speak',{text:s.script,region,gender:'Female',age:'Adult',category:'Commentary'});$('#g_voice').value=a.file;say('Voice tayyar ('+a.engine+'): ab Run dabao')}catch(e){say(e.message,1)}
+  };
+}
+function voiceBox(p){const o=a=>a.map(c=>'<option>'+c+'</option>').join('');return '<div class="row"><div><label>Category (style)</label><select id="'+p+'cat">'+o(CATS)+'</select></div><div><label>Gender</label><select id="'+p+'g">'+o(['Female','Male'])+'</select></div><div><label>Age</label><select id="'+p+'age">'+o(['Child','Teen','Adult','Senior']).replace('<option>Adult','<option selected>Adult')+'</select></div><div><label>Voice</label><select id="'+p+'v"></select></div></div><label>Script</label><textarea id="'+p+'tx" rows="5"></textarea><button class="btn g" id="'+p+'ai">AI script (region ke mutabiq)</button> <button class="btn" id="'+p+'go">Voice generate</button><div id="'+p+'out"></div>'}
+function wireVoice(p){$('#'+p+'g').onchange=()=>loadVoices(p);$('#'+p+'ai').onclick=()=>doScript(p);$('#'+p+'go').onclick=()=>doTts(p)}
+async function loadVoices(p){if(!base()||!$('#'+p+'v'))return;try{const v=await api('/api/voices2?region='+encodeURIComponent(region)+'&gender='+$('#'+p+'g').value);$('#'+p+'v').innerHTML=v.map(x=>'<option value="'+esc(x.name)+'">'+esc(x.name)+' ('+x.engine+')</option>').join('')}catch(e){say(e.message,1)}}
+async function doTts(p){
+  try{say('Voice ban rahi hai (pehli Kokoro request model download karti hai, slow ho sakti hai)...');const r=await post('/api/speak',{text:$('#'+p+'tx').value,voice:$('#'+p+'v').value,category:$('#'+p+'cat').value,gender:$('#'+p+'g').value,age:$('#'+p+'age').value,region});
+  window.vFile=r.file;$('#'+p+'out').innerHTML='<audio controls src="'+base()+r.file+'" style="width:100%;margin-top:10px"></audio><small>Engine: '+esc(r.engine)+' · '+esc(r.voice)+' · Timeline editor me khud lag jayegi</small>';say('')}catch(e){say(e.message,1)}
+}
+async function doScript(p){
+  try{say('Script likh raha hoon...');const r=await post('/api/script',{topic:$('#'+p+'tx').value||$('#'+p+'cat').value,category:$('#'+p+'cat').value,region});$('#'+p+'tx').value=r.script||'';say('')}catch(e){say(e.message,1)}
+}
+function sfxBox(){return '<hr style="border-color:var(--b);margin:16px 0"><h2 style="font-size:13px;color:var(--a)">Sound effects / music search (Freesound)</h2><div class="row"><input id="sq" placeholder="whoosh, thunder, door, rain, suspense..."><select id="sk"><option value="sfx">Sound effect (max 15s)</option><option value="music">Music (CC0 only)</option></select></div><button class="btn" id="sgo">Search</button><div id="sres" class="grid" style="margin-top:10px"></div>'}
+async function sfxGo(){try{say('Dhoondh raha hoon...');const r=await api('/api/sfx?q='+encodeURIComponent($('#sq').value)+'&kind='+$('#sk').value);$('#sres').innerHTML=r.map(x=>'<div><b>'+esc(x.name)+'</b><br><small>'+Math.round(x.duration)+'s · '+esc(x.license)+'</small><audio controls preload="none" src="'+esc(x.preview)+'" style="width:100%"></audio><a target="_blank" rel="noopener" href="https://freesound.org/s/'+x.id+'/">Freesound page (download)</a></div>').join('')||'<small>Kuch nahi mila</small>';say('')}catch(e){say(e.message,1)}}
+async function runClips(){
+  const f=$('#file').files[0],u=$('#url').value.trim();
+  if(!f&&!u)return say('Link ya file do',1);
+  const fd=new FormData();if(f)fd.append('file',f);else fd.append('url',u);
+  const cats=$$('#cats .chip.on').map(c=>c.dataset.c);
+  fd.append('kind',kind);fd.append('count',$('#count').value);fd.append('target',$('#dur').value);fd.append('cats',cats.join(',')||'Auto');
+  fd.append('mix',$('#mix').value);fd.append('vertical',$('#vert').checked);fd.append('t0',tsec($('#t0').value));fd.append('t1',tsec($('#t1').value));
+  $('#res').innerHTML='';$('#go').disabled=true;
+  try{
+    const r=await api('/api/clips',{method:'POST',body:fd});
+    for(;;){
+      const j=await api('/api/jobs/'+r.job);$('#prog').textContent=j.msg+(j.total?' ('+j.clips.length+'/'+j.total+')':'');
+      show(j.clips);
+      if(j.status==='error')throw new Error(j.msg);
+      if(j.status==='done'){saveHist({t:Date.now(),kind,src:f?f.name:u,clips:j.clips});break}
+      await new Promise(x=>setTimeout(x,3000));
+    }
+  }catch(e){say(e.message,1)}finally{$('#go').disabled=false}
+}
+function show(cl,t){
+  t=t||'#res';$(t).innerHTML=cl.map(c=>'<div><video controls playsinline preload="metadata" src="'+base()+c.file+'"></video><div><b>'+esc(c.title)+'</b><br><small>'+esc(c.category)+'</small><br><a target="_blank" rel="noopener" href="'+base()+c.file+'">Open / Download</a> <button class="btn g" data-e="'+esc(c.file)+'">Edit</button></div></div>').join('');
+  $$(t+' button[data-e]').forEach(b=>b.onclick=()=>{window.editSrc=b.dataset.e;go('edit')});
+}
+async function doRegen(){
+  try{say('Soch raha hoon...');const r=await post('/api/script',{topic:$('#rg').value,category:'Commentary',region});$('#rgOut').innerHTML='<h3>'+esc(r.title)+'</h3><pre>'+esc(r.script)+'</pre><small>'+esc((r.hashtags||[]).join(' '))+'</small>';say('')}catch(e){say(e.message,1)}
+}
+async function doRev(){
+  try{say('Channel analyze ho raha hai...');const r=await post('/api/reverse',{url:$('#rv').value.trim(),region});$('#rvOut').innerHTML='<pre>'+esc(JSON.stringify(r,null,2))+'</pre>';say('')}catch(e){say(e.message,1)}
+}
+async function trends(){
+  const k=S('yt','');if(!k){$('#tnOut').innerHTML='';return say('Settings me YouTube Data API key daalo (free quota)',1)}
+  const c=YT[$('#tn').value];say('');
+  try{
+    const u='https://www.googleapis.com/youtube/v3/videos?part=snippet,statistics&chart=mostPopular&maxResults=12&regionCode='+REG[region]+(c?'&videoCategoryId='+c:'')+'&key='+encodeURIComponent(k);
+    const r=await fetch(u),j=await r.json();if(j.error)throw new Error(j.error.message);
+    $('#tnOut').innerHTML=j.items.map(v=>'<div><img src="'+esc(v.snippet.thumbnails.medium.url)+'" alt=""><div><b>'+esc(v.snippet.title)+'</b><br><small>'+esc(v.snippet.channelTitle)+' · '+Number(v.statistics.viewCount||0).toLocaleString()+' views</small><br><button class="btn g" data-id="'+esc(v.id)+'">Source banao</button></div></div>').join('');
+    $$('#tnOut button').forEach(b=>b.onclick=()=>{go('short');$('#url').value='https://www.youtube.com/watch?v='+b.dataset.id});
+  }catch(e){say(e.message,1)}
+}
+const hk=()=>'hist_'+(user?user.email:'guest');
+function saveHist(h){let a=[];try{a=JSON.parse(S(hk(),'[]'))}catch(e){}a.unshift(h);W(hk(),JSON.stringify(a.slice(0,50)))}
+function hist(){
+  let a=[];try{a=JSON.parse(S(hk(),'[]'))}catch(e){}
+  a=a.filter(x=>Date.now()-x.t<5*864e5);W(hk(),JSON.stringify(a));
+  $('#hist').innerHTML=a.map(x=>'<div class="card"><b>'+esc(x.kind)+'</b> · '+new Date(x.t).toLocaleString()+'<br><small>'+esc(x.src)+'</small><div class="grid" style="margin-top:8px">'+x.clips.map(c=>'<div><video controls preload="metadata" src="'+base()+c.file+'"></video></div>').join('')+'</div></div>').join('')||'<small>Abhi koi kaam nahi.</small>';
+}
+function loadSet(){$('#sApi').value=S('api','');$('#sYt').value=S('yt','');$('#sSu').value=S('sbu','');$('#sSk').value=S('sbk','');$('#acc').textContent=user?('Login: '+user.email):'Guest mode'}
+function saveSet(){W('api',$('#sApi').value.trim());W('yt',$('#sYt').value.trim());W('sbu',$('#sSu').value.trim());W('sbk',$('#sSk').value.trim());say('Save ho gaya');ping();initAuth()}
+function loadJs(u){return new Promise((ok,no)=>{const s=document.createElement('script');s.src=u;s.onload=ok;s.onerror=no;document.head.appendChild(s)})}
+async function initAuth(){
+  const u=S('sbu',''),k=S('sbk','');if(!u||!k)return;
+  try{if(!window.supabase)await loadJs('https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js');
+  sb=window.supabase.createClient(u,k);const d=await sb.auth.getSession();user=d.data.session?d.data.session.user:null;$('#who').textContent=user?user.email:'Guest'}catch(e){say('Supabase connect nahi hua',1)}
+}
+async function login(){if(!sb)return say('Pehle Settings me Supabase URL/key save karo',1);const r=await sb.auth.signInWithOtp({email:$('#em').value.trim(),options:{emailRedirectTo:location.href}});say(r.error?r.error.message:'Email me login link bhej diya',!!r.error)}
+async function logout(){if(sb)await sb.auth.signOut();user=null;$('#who').textContent='Guest';loadSet()}
+async function ping(){try{const r=await api('/health');$('#dot').style.background='#3ddc84';$('#st').textContent='backend online'+(r.groq?'':' (Groq key nahi: basic cut mode)')}catch(e){$('#dot').style.background='#ff5555';$('#st').textContent='backend offline'}}
+buildUI();$('#ttsBox').innerHTML=voiceBox('s');$('#mk').innerHTML=voiceBox('m')+sfxBox();['s','m'].forEach(wireVoice);$('#sgo').onclick=sfxGo;go('short');ping();initAuth();
+</script></body></html>
