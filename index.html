@@ -26,6 +26,7 @@
             overflow: hidden; 
         }
         
+        /* SIDEBAR INTERFACE DESIGN */
         .sidebar-panel { 
             width: 290px; 
             background: var(--card-bg); 
@@ -68,6 +69,7 @@
             box-shadow: 0 4px 12px rgba(255, 71, 87, 0.3); 
         }
         
+        /* CONTAINER LAYOUT ARCHITECTURE */
         .main-content-window { 
             flex: 1; 
             display: flex; 
@@ -223,7 +225,7 @@
 </head>
 <body>
 
-    <!-- SIDEBAR NAVIGATION PANEL -->
+    <!-- 📱 SIDEBAR NAVIGATION ARCHITECTURE -->
     <div class="sidebar-panel">
         <div>
             <div class="sidebar-brand">⚙️ AI Studio Hub</div>
@@ -236,11 +238,11 @@
         </div>
     </div>
 
-    <!-- CENTRAL CONTENT LAYER -->
+    <!-- 🌌 CENTRAL WINDOW LAYER -->
     <div class="main-content-window">
         <div class="workspace-wrapper">
             
-            <!-- COUNTRY & REGION TARGET HUB -->
+            <!-- COUNTRY REGION SELECTION & NEWS INTELLIGENCE HUB -->
             <div class="control-block-card">
                 <h2>🌍 Global Audience Target & Regional Psyche Mapping</h2>
                 <div class="horizontal-filters-row" style="grid-template-columns: 1fr 1fr;">
@@ -254,17 +256,16 @@
                         </select>
                     </div>
                     <div>
-                        <label>AI Overall Suggestion, Verification & News Engine Status:</label>
+                        <label>AI News Engine Engine Feed Tracker Status:</label>
                         <div id="aiOverallSuggestionStatusNode" style="background: var(--input-bg); padding: 12px; border-radius: 8px; border: 1px solid #2f3542; font-size: 12px; color: #2ed573; font-weight: bold;">
-                            🔄 AI Ingestion Ready: Select a country to load real-time trend stream variables.
+                            🔄 AI Ingestion Ready: Select country or change selection to load live trends feed streams.
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- SHORTS DASHBOARD TAB -->
+            <!-- 1️⃣ SHORTS STUDIO VIEW BLOCK -->
             <div id="shortsStudioTabWindow" class="app-view-panel active">
                 <div class="control-block-card">
                     <h2>📱 Multi-Stream Ingestion Panel (Shorts Pipeline)</h2>
                     <div class="drag-drop-zone-wrapper">
-                        <p style="margin: 0; font-size: 13px; font-weight: bold;">📥 Drag & Drop Local Videos/Pictures here or click to browse</p>
