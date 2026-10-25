@@ -145,6 +145,53 @@ audio{width:100%;margin-top:10px}
   .side-foot{display:none}
   main{padding:16px}
 }
+
+/* ---- topbar extra chips ---- */
+.topbar-extra{display:flex;align-items:center;gap:8px}
+.chipbtn{display:flex;align-items:center;gap:6px;background:var(--panel);border:1px solid var(--border);
+  padding:7px 11px;border-radius:10px;color:var(--muted);cursor:pointer;font-size:12px}
+.chipbtn:hover{color:var(--text);border-color:var(--border2)}
+.helpbox{display:none;background:var(--panel2);border:1px solid var(--border2);border-radius:12px;padding:12px 14px;margin-bottom:14px;font-size:12.5px;color:var(--muted)}
+.helpbox.on{display:block}
+.helpbox li{margin:3px 0}
+
+/* ---- home dashboard ---- */
+.homegrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:14px;margin-top:16px}
+.homecard{background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:18px;cursor:pointer;box-shadow:var(--shadow)}
+.homecard:hover{border-color:var(--accent)}
+.homecard .ic{font-size:24px;margin-bottom:8px;display:block}
+.homecard b{display:block;font-size:14px;margin-bottom:4px}
+.homecard span{color:var(--muted);font-size:12px}
+
+/* ---- aspect ratio chips ---- */
+.aspectrow{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
+.aspect{display:flex;flex-direction:column;align-items:center;gap:6px;padding:8px 10px;border-radius:10px;
+  border:1px solid var(--border2);background:var(--panel2);color:var(--muted);cursor:pointer;min-width:66px}
+.aspect .box{border:2px solid var(--muted2);border-radius:3px;background:rgba(255,255,255,.04)}
+.aspect .lg{font-size:13px}
+.aspect span{font-size:10.5px;text-align:center;line-height:1.2}
+.aspect.on{border-color:var(--accent);background:linear-gradient(180deg,rgba(124,92,255,.18),rgba(124,92,255,.04));color:#fff}
+.aspect.on .box{border-color:var(--accent)}
+
+/* ---- dropzone ---- */
+.dropzone{border:1.5px dashed var(--border2);border-radius:12px;padding:18px;text-align:center;color:var(--muted);
+  font-size:12.5px;cursor:pointer;background:var(--panel2)}
+.dropzone.drag{border-color:var(--accent);color:#fff;background:rgba(124,92,255,.08)}
+.dropzone input{display:none}
+
+/* ---- stacked page blocks ---- */
+.blockcard{background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:18px;margin-top:16px;box-shadow:var(--shadow)}
+.blockhead{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
+.blockhead h3{margin:0;font-size:12px;color:var(--teal);text-transform:uppercase;letter-spacing:1px}
+.cardhead{display:flex;align-items:center;justify-content:space-between}
+.cardhead h2{margin:0}
+
+/* ---- image studio canvas ---- */
+.imgtabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+canvas#edCanvas{max-width:100%;border-radius:10px;background:#000;display:block;margin-top:10px}
+.sliderow{display:flex;align-items:center;gap:10px;margin-top:8px}
+.sliderow input[type=range]{flex:1}
+.sliderow span{width:34px;text-align:right;color:var(--muted);font-size:12px}
 </style></head>
 <body>
 <aside>
@@ -159,19 +206,34 @@ audio{width:100%;margin-top:10px}
 <main>
 <div id="msg"></div>
 
+<!-- ============ HOME ============ -->
+<section class="view" id="v-home">
+ <div class="topbar"><div><h1>ClipForge Studio</h1><div class="sub">Free AI clip &amp; content engine — pick a tool to get started</div></div></div>
+ <div class="homegrid" id="homeGrid"></div>
+</section>
+
 <!-- ============ CLIP EXTRACTOR ============ -->
 <section class="view" id="v-studio">
  <div class="topbar">
   <div><h1>Clip Extractor</h1><div class="sub">Turn any video into ready-to-post clips</div></div>
-  <div class="regionbox"><label>Region</label><select id="region"></select></div>
+  <div class="topbar-extra">
+   <div class="chipbtn" id="helpChip">❓ Help</div>
+   <div class="chipbtn" id="acctChip">👤 Guest</div>
+   <div class="regionbox"><label>Region</label><select id="region"></select></div>
+  </div>
  </div>
+ <div class="helpbox" id="helpBox"><ul>
+   <li>Paste a link <b>or</b> upload/drop a file — not both.</li>
+   <li>Short Clips = 9:16-friendly, 15s–3min. Long Clips = 5–45min highlight reels.</li>
+   <li>Use <b>+ Add Page</b> below to queue up to 10 separate clip jobs, each with its own settings (and, if you fill it in, its own source link/file).</li>
+ </ul></div>
 
  <div class="toolrow" id="kindTabs"></div>
 
  <div class="pastewrap">
   <div class="pastebar"><input id="url" placeholder="Paste a YouTube, TikTok, Instagram or any video link…"><button class="btn" id="go">Get Clips</button></div>
   <div class="uploadlink" id="toggleUpload">⬆ Upload a video file instead</div>
-  <div id="filebox"><input id="file" type="file" accept="video/*"></div>
+  <div id="filebox" style="display:none;margin-top:12px" class="dropzone">⬆ Click or drop a video file here<input id="file" type="file" accept="video/*"></div>
   <video id="prev" class="preview" controls></video>
   <div class="platforms">
    <span class="pbadge">▶ YouTube</span><span class="pbadge">TikTok</span><span class="pbadge">Instagram</span>
@@ -179,35 +241,8 @@ audio{width:100%;margin-top:10px}
   </div>
  </div>
 
- <div class="card">
-  <h2>Clip Settings</h2>
-  <div class="row">
-   <div><label>Number of clips</label><input id="count" type="number" min="1" max="12" value="3"></div>
-   <div><label>Vertical 9:16 (shorts)</label><select id="vert"><option value="true">On</option><option value="false">Off</option></select></div>
-   <div><label>Category mode</label><select id="mix"><option value="single">One category per clip</option><option value="mixed">Mixed categories per clip</option></select></div>
-  </div>
-
-  <label>Clip length range (seconds)</label>
-  <div class="rangewrap"><input id="minlen" type="number" min="5" value="30"><span>to</span><input id="maxlen" type="number" min="5" value="60"><span>seconds</span></div>
-  <div class="presetrow" id="presets"></div>
-
-  <label>Category cluster</label>
-  <details class="cluster" id="catCluster" open>
-   <summary>Select categories <small id="catSummary">Auto</small></summary>
-   <div class="clusterbody" id="cats"></div>
-  </details>
-
-  <label>Trim timeline (optional)</label>
-  <div class="trim" id="trimS"><div class="fill" id="fillS"></div>
-   <input type="range" id="r0" min="0" max="100" step="0.1" value="0">
-   <input type="range" id="r1" min="0" max="100" step="0.1" value="100"></div>
-  <div class="hint">Drag the handles after loading a video/link preview to limit the source range.</div>
-
-  <button class="btn" id="run" style="margin-top:16px">Generate Clips</button>
-  <div class="hint" id="prog"></div>
- </div>
-
- <div class="card"><h2>Results</h2><div class="grid" id="res"></div></div>
+ <div class="card cardhead"><h2 style="margin:0">Clip Settings</h2><button class="btn g sm" id="addPage">+ Add Page</button></div>
+ <div id="blocksWrap"></div>
 </section>
 
 <!-- ============ GENERIC TOOL PAGES (enhance / expand / edit / anim) ============ -->
@@ -233,6 +268,47 @@ audio{width:100%;margin-top:10px}
  <div class="card"><h2>Sound Effects &amp; Music Search</h2><div id="sfxbox"></div></div>
 </section>
 
+<!-- ============ PICTURE STUDIO ============ -->
+<section class="view" id="v-image">
+ <div class="topbar"><div><h1>Picture Studio</h1><div class="sub">AI-generate a new image, AI-regenerate an existing one with changes, or edit manually</div></div></div>
+ <div class="imgtabs" id="imgTabs"></div>
+
+ <div class="card" id="imgGenCard">
+  <h2>AI Generate</h2>
+  <label>Describe the image</label><textarea id="igPrompt" rows="3" placeholder="e.g. a motivational sunrise over mountains, cinematic"></textarea>
+  <div class="row">
+   <div><label>Style / category</label><select id="igCat"></select></div>
+   <div><label>Aspect ratio</label><select id="igRatio"><option value="1024,1024">1:1 Square</option><option value="768,1365">9:16 Vertical</option><option value="1365,768">16:9 Landscape</option><option value="896,1152">4:5 Portrait</option></select></div>
+  </div>
+  <button class="btn" id="igGo" style="margin-top:14px">Generate Image</button>
+  <div class="hint">Free AI image generation via Pollinations.ai — results vary, no login needed.</div>
+  <div id="igOut" style="margin-top:12px"></div>
+ </div>
+
+ <div class="card" id="imgEditCard" style="display:none">
+  <h2>AI Edit / Change</h2>
+  <label>Reference image (optional)</label>
+  <div class="dropzone" id="ieZone">⬆ Click or drop an image here<input id="ieFile" type="file" accept="image/*"></div>
+  <label>Describe the change you want</label><textarea id="iePrompt" rows="3" placeholder="e.g. same scene but at night with neon lights"></textarea>
+  <button class="btn" id="ieGo" style="margin-top:14px">Regenerate Image</button>
+  <div class="hint">Honest note: free tools can't pixel-edit your exact photo — this describes your reference + your change and generates a fresh AI image to match. For exact edits (crop/text/filters) use Manual Edit.</div>
+  <div id="ieOut" style="margin-top:12px"></div>
+ </div>
+
+ <div class="card" id="imgManCard" style="display:none">
+  <h2>Manual Edit</h2>
+  <div class="dropzone" id="imZone">⬆ Click or drop an image here<input id="imFile" type="file" accept="image/*"></div>
+  <div class="row" style="margin-top:12px">
+   <div><label>Rotate</label><div style="display:flex;gap:8px"><button class="btn g sm" id="imRotL">⟲ Left</button><button class="btn g sm" id="imRotR">⟳ Right</button><button class="btn g sm" id="imFlip">⇋ Flip</button></div></div>
+  </div>
+  <label>Brightness</label><div class="sliderow"><input id="imBright" type="range" min="50" max="150" value="100"><span id="imBrightV">100%</span></div>
+  <label>Contrast</label><div class="sliderow"><input id="imContrast" type="range" min="50" max="150" value="100"><span id="imContrastV">100%</span></div>
+  <label>Add text overlay</label><input id="imText" placeholder="Optional caption text">
+  <canvas id="edCanvas"></canvas>
+  <div style="display:flex;gap:10px;margin-top:12px;flex-wrap:wrap"><button class="btn" id="imApply">Apply</button><a class="btn g" id="imDl" download="edited.png">Download PNG</a></div>
+ </div>
+</section>
+
 <!-- ============ SCRIPT / REGEN ============ -->
 <section class="view" id="v-regen">
  <div class="topbar"><div><h1>Script &amp; Content Regeneration</h1><div class="sub">AI-written scripts tuned to your selected region's tone</div></div></div>
@@ -246,14 +322,21 @@ audio{width:100%;margin-top:10px}
 
 <!-- ============ REVERSE ENGINEERING ============ -->
 <section class="view" id="v-rev">
- <div class="topbar"><div><h1>Channel Reverse Engineering</h1><div class="sub">Analyze a channel's formula and get new title/script ideas</div></div></div>
- <div class="card"><label>Channel or video link</label><input id="rv" placeholder="https://youtube.com/@channel">
-  <button class="btn" id="rvGo" style="margin-top:10px">Analyze Channel</button><div id="rvOut"></div></div>
+ <div class="topbar"><div><h1>Channel Reverse Engineering</h1><div class="sub">Analyze a channel's formula and get new title/script ideas — YouTube, TikTok, Instagram, Facebook and more</div></div></div>
+ <div class="card"><label>Channel or video link (any platform)</label><input id="rv" placeholder="https://youtube.com/@channel, tiktok.com/@user, instagram.com/username…">
+  <div class="uploadlink" id="rvToggleUpload">⬆ Or upload / drop a video file instead</div>
+  <div id="rvZone" class="dropzone" style="display:none;margin-top:10px">⬆ Click or drop a video file here<input id="rvFile" type="file" accept="video/*"></div>
+  <button class="btn" id="rvGo" style="margin-top:10px">Analyze Channel</button>
+  <div class="hint">Full A-to-Z breakdown: titles, hashtags, visual style, voice/music, language, audience age and which topics get the most views.</div>
+  <div id="rvOut"></div></div>
 </section>
 
 <!-- ============ TOP NICHES ============ -->
 <section class="view" id="v-trend">
- <div class="topbar"><div><h1>Top Performing Niches</h1><div class="sub">Live trending videos for the selected region</div></div></div>
+ <div class="topbar">
+  <div><h1>Top Performing Niches</h1><div class="sub">Live trending videos, auto-suggested for your selected country/region</div></div>
+  <div class="regionbox"><label>Region</label><select id="tnRegion"></select></div>
+ </div>
  <div class="card"><div class="row"><div><label>Niche</label><select id="tn"></select></div></div>
   <button class="btn" id="tnGo" style="margin-top:10px">Refresh</button><div id="tnOut" class="grid" style="margin-top:14px"></div></div>
 </section>
@@ -294,29 +377,48 @@ const fmt=s=>{s=Math.max(0,Math.round(s));return Math.floor(s/60)+':'+String(s%6
 const REG={USA:'US',Canada:'CA',Europe:'FR',UK:'GB',Gulf:'AE',China:'HK',Japan:'JP',Korea:'KR',Russia:'RU',Germany:'DE',Scandinavia:'SE',Singapore:'SG'};
 const CATS=['Motivation','Horror','Romance','Comedy','Fight/Argue','Commentary','Education','Mehndi/Bridal','Sports','News','Gaming','Music'];
 const YT={All:'',Music:10,Gaming:20,Comedy:23,Entertainment:24,News:25,Education:27,Sports:17,'How-to':26};
-const PRESETS={short:[[15,30],[30,60],[45,90],[60,120],[90,180]],long:[[300,600],[600,1200],[1200,1800],[1800,2700],[2700,2700]]};
+const PRESETS={short:[[15,30],[30,60],[45,90],[60,120],[90,180]],long:[[300,600],[600,1200],[1200,1800],[1800,2400],[2400,2700]]};
+const CLIP_LIMITS={short:8,long:5};
 const MUSIC={YouTube:[['YouTube Audio Library','https://studio.youtube.com'],['Pixabay Music','https://pixabay.com/music/']],
  Instagram:[['Pixabay Music','https://pixabay.com/music/'],['Mixkit','https://mixkit.co/free-stock-music/']],
  TikTok:[['Pixabay Music','https://pixabay.com/music/'],['Mixkit','https://mixkit.co/free-stock-music/']],
  Facebook:[['Pixabay Music','https://pixabay.com/music/'],['Free Music Archive','https://freemusicarchive.org/']],
  Snapchat:[['Pixabay Music','https://pixabay.com/music/'],['Mixkit','https://mixkit.co/free-stock-music/']],
  Bilibili:[['Pixabay Music','https://pixabay.com/music/'],['Free Music Archive','https://freemusicarchive.org/']]};
-const NAV=[['studio','✂️','Clip Extractor'],['rev','🔎','Reverse Engineering'],['regen','📝','Script & Regeneration'],
- ['enhance','✨','Quality Enhance'],['expand','🖼️','Expand Video'],['edit','⏱️','Timeline Editor'],
- ['maker','🎙️','Voice, Music & SFX'],['anim','🎬','Animation Studio'],['trend','📈','Top Niches'],
+const NAV=[['home','🏠','Home'],['studio','✂️','Clip Extractor'],['rev','🔎','Reverse Engineering'],['regen','📝','Script & Regeneration'],
+ ['enhance','✨','Quality Enhance'],['expand','📐','Expand Video'],['edit','⏱️','Timeline Editor'],
+ ['maker','🎙️','Voice, Music & SFX'],['image','🖼️','Picture Studio'],['anim','🎬','Animation Studio (AI Video)'],['trend','📈','Top Niches'],
  ['hist','🗂️','Previous Work'],['set','⚙️','Settings']];
+const HOME_CARDS=[['studio','✂️','Clip Extractor','Turn any video link or upload into ready-to-post clips'],
+ ['rev','🔎','Reverse Engineering','Analyze any channel — title, hashtags, voice, audience, top topics'],
+ ['regen','📝','Script & Regeneration','AI-written scripts tuned to your region, plus translation'],
+ ['enhance','✨','Quality Enhance','Denoise, sharpen and upscale a clip'],
+ ['expand','📐','Expand Video','Blur-fill a new aspect ratio, or extend the duration'],
+ ['edit','⏱️','Timeline Editor','Manual trim/speed, or regenerate the voiceover with AI'],
+ ['maker','🎙️','Voice, Music & SFX','AI voices with gender/age/accent, plus a sound effects library'],
+ ['image','🖼️','Picture Studio','AI-generate, AI-edit or manually edit images/thumbnails'],
+ ['anim','🎬','Animation Studio (AI Video)','AI video making — 2D/3D/4D/cinematic illustrated scenes with narration'],
+ ['trend','📈','Top Niches','Live trending videos for your selected region'],
+ ['hist','🗂️','Previous Work','Your local history, auto-cleared after 5 days']];
+const ASPECTS=[['916','9:16','16,34','Shorts / Reels / TikTok'],['45','4:5','18,22','IG Feed Portrait'],
+ ['11','1:1','20,20','IG / FB Feed Square'],['169','16:9','30,17','YouTube / Landscape']];
+const LONGCATS_EXTRA=['Suspense','Climax','Important','Interesting'];
+const IMG_STYLES=['Cinematic','Photorealistic','2D Animation','3D Animation','4D / Hyper-real','Anime / Manga','Watercolor Painting','Oil Painting','Comic Book','Low-Poly 3D','Claymation','Fantasy Art','Cyberpunk','Minimalist Flat'];
+const AGE_HINT='Child ≈5–12 · Teen ≈13–19 · Adult ≈20–55 · Senior ≈55+ (max supported range)';
 const TOOLS={
- enhance:{t:'Quality Enhance',sub:'Denoise, sharpen and upscale a clip',file:1,f:[['height','select','Output height',['1080','720']]]},
+ enhance:{t:'Quality Enhance',sub:'Denoise, sharpen and upscale a clip',file:1,
+  f:[['height','select','Output height',['720|720 (HD)','1080|1080 (Full HD)','1440|1440 (2K)','2160|2160 (4K)']]],
+  hint:'Free ffmpeg upscaling, no watermark — 2K/4K use more CPU and take longer on the free backend, and quality still depends on your source video.'},
  expand:{t:'Expand Video',sub:'Blur-fill a new aspect ratio, or extend the duration',file:1,
-  f:[['mode','select','Mode',['ratio','extend']],['ratio','select','Ratio (blur-fill mode)',['16:9','9:16','1:1']],['seconds','number','Extend mode: target seconds',60]]},
+  f:[['mode','select','Mode',['ratio','extend']],['ratio','select','Ratio (blur-fill mode)',['16:9','9:16','1:1','4:5']],['seconds','number','Extend mode: target seconds',60]]},
  edit:{t:'Timeline Editor',sub:'Manual trim/speed, or regenerate the voiceover with AI',file:1,tl:1,
   f:[['start','number','Start (sec)',0],['end','number','End (sec, 0 = to the end)',0],['speed','select','Speed',['1','0.5','0.75','1.25','1.5','2']],
     ['mute','check','Mute original audio'],['voice','text','Voice/music file path (auto-filled)','']]},
- anim:{t:'Animation Studio',sub:'AI-generated illustrated scenes with narration',
-  f:[['topic','textarea','Topic or script',''],['category','select','Category',CATS],['scenes','number','Scenes (3-8)',4],
-    ['gender','select','Voice gender',['Female','Male']],['age','select','Voice age',['Child','Teen','Adult','Senior']],['voice','text','Voice id (blank = auto)','']]}
+ anim:{t:'Animation Studio',sub:'AI video making — illustrated scenes with narration (2D/3D/4D/cinematic styles)',
+  f:[['topic','textarea','Topic or script',''],['category','select','Script tone / category',CATS],['style','select','Visual style',IMG_STYLES],['scenes','number','Scenes (3-8 max)',4],
+    ['gender','select','Voice gender',['Female','Male']],['age','select','Voice age ('+AGE_HINT+')',['Child','Teen','Adult','Senior']],['voice','text','Voice id (blank = auto)','']]}
 };
-let region=S('region','USA'),kind='short',sb=null,user=null,LANGS=[];
+let region=S('region','USA'),kind='short',sb=null,user=null,LANGS=[],blocks=[1];
 const base=()=>S('api','').replace(/\/$/,'');
 function say(t,ok){const m=$('#msg');m.className=ok?'ok':'';m.style.display=t?'block':'none';m.textContent=t||''}
 async function api(p,o){if(!base())throw new Error('Set your Backend URL first in Settings');const r=await fetch(base()+p,o);if(!r.ok)throw new Error((await r.text()).slice(0,300));return r.json()}
@@ -330,9 +432,15 @@ function go(v){
   say('');
   if(TOOLS[v])renderTool(v);
   if(v==='maker')loadVoices('m');
-  if(v==='trend')trends();
+  if(v==='trend'){buildTrendRegion();trends()}
   if(v==='hist')hist();
   if(v==='set')loadSet();
+  if(v==='home')buildHome();
+  if(v==='image')buildImage();
+}
+function buildHome(){
+  $('#homeGrid').innerHTML=HOME_CARDS.map(c=>'<div class="homecard" data-v="'+c[0]+'"><span class="ic">'+c[1]+'</span><b>'+c[2]+'</b><span>'+c[3]+'</span></div>').join('');
+  $$('#homeGrid .homecard').forEach(c=>c.onclick=()=>go(c.dataset.v));
 }
 function buildNav(){
   $('#nav').innerHTML=NAV.map(n=>'<button data-v="'+n[0]+'"><span class="ic">'+n[1]+'</span>'+n[2]+'</button>').join('');
@@ -342,26 +450,73 @@ function buildStudio(){
   $('#region').innerHTML=Object.keys(REG).map(r=>'<option'+(r===region?' selected':'')+'>'+r+'</option>').join('');
   $('#region').onchange=e=>{region=e.target.value;W('region',region);loadVoices('m');if($('#v-trend').classList.contains('on'))trends()};
   $('#kindTabs').innerHTML=['short','long'].map(k=>'<div class="toolpill'+(k===kind?' on':'')+'" data-k="'+k+'"><span class="ic">'+(k==='short'?'⚡':'🎞️')+'</span><span>'+(k==='short'?'Short Clips':'Long Clips')+'</span></div>').join('');
-  $$('#kindTabs .toolpill').forEach(p=>p.onclick=()=>{kind=p.dataset.k;$$('#kindTabs .toolpill').forEach(x=>x.classList.toggle('on',x===p));setKind()});
-  setKind();
-  $('#cats').innerHTML=CATS.map(c=>'<span class="chip" data-c="'+c+'">'+c+'</span>').join('');
-  $$('#cats .chip').forEach(c=>c.onclick=()=>{c.classList.toggle('on');updateCatSummary()});
+  $$('#kindTabs .toolpill').forEach(p=>p.onclick=()=>{kind=p.dataset.k;$$('#kindTabs .toolpill').forEach(x=>x.classList.toggle('on',x===p));blocks=[1];renderBlocks()});
+  dropzone('#filebox','#file');
   $('#toggleUpload').onclick=()=>{const b=$('#filebox');b.style.display=b.style.display==='none'||!b.style.display?'block':'none'};
-  $('#file').onchange=e=>{const f=e.target.files[0],p=$('#prev');if(f){p.src=URL.createObjectURL(f);p.style.display='block';p.onloadedmetadata=()=>initTrim(p,'#r0','#r1','#fillS')}else p.style.display='none'};
-  ['#r0','#r1'].forEach(id=>$(id).oninput=()=>syncTrim('#r0','#r1','#fillS',$('#prev')));
-  $('#go').onclick=()=>{if($('#url').value.trim()){$('#filebox').style.display='none';const p=$('#prev');p.src=$('#url').value.trim();p.style.display='block';p.onerror=()=>{p.style.display='none'}}runClips()};
+  $('#file').onchange=e=>{const f=e.target.files[0],p=$('#prev');if(f){p.src=URL.createObjectURL(f);p.style.display='block'}else p.style.display='none'};
+  $('#go').onclick=()=>{if($('#url').value.trim()){$('#filebox').style.display='none';const p=$('#prev');p.src=$('#url').value.trim();p.style.display='block';p.onerror=()=>{p.style.display='none'}}generateBlock(1)};
   $('#url').onkeydown=e=>{if(e.key==='Enter')$('#go').click()};
-  $('#run').onclick=runClips;
+  $('#helpChip').onclick=()=>$('#helpBox').classList.toggle('on');
+  $('#acctChip').onclick=()=>go('set');
+  $('#addPage').onclick=()=>{if(blocks.length>=10)return say('Maximum 10 pages per job');blocks.push(Math.max(...blocks)+1);renderBlocks()};
+  blocks=[1];renderBlocks();
 }
-function setKind(){
+function dropzone(zoneSel,inputSel){
+  const z=$(zoneSel),i=$(inputSel);if(!z||!i)return;
+  z.onclick=e=>{if(e.target!==i)i.click()};
+  ['dragenter','dragover'].forEach(ev=>z.addEventListener(ev,e=>{e.preventDefault();e.stopPropagation();z.classList.add('drag')}));
+  ['dragleave','drop'].forEach(ev=>z.addEventListener(ev,e=>{e.preventDefault();e.stopPropagation();z.classList.remove('drag')}));
+  z.addEventListener('drop',e=>{if(e.dataTransfer.files&&e.dataTransfer.files[0]){i.files=e.dataTransfer.files;i.dispatchEvent(new Event('change'))}});
+}
+function aspectHTML(n){
+  const icon={'916':'🎵','45':'📷','11':'🔳','169':'▶️'};
+  return '<div class="aspectrow" id="aspect_'+n+'">'+ASPECTS.map(a=>{const d=a[2].split(',');
+    return '<div class="aspect" data-k="'+a[0]+'"><div class="box" style="width:'+d[0]+'px;height:'+d[1]+'px"></div><div class="lg">'+(icon[a[0]]||'')+'</div><span>'+a[1]+'<br>'+a[3]+'</span></div>';
+  }).join('')+'</div>';
+}
+function blockHTML(n){
+  const isLong=kind==='long';
+  const cats=isLong?CATS.concat(LONGCATS_EXTRA):CATS;
+  const maxCount=CLIP_LIMITS[kind];
+  const countOpts=Array.from({length:maxCount},(_,i)=>i+1);
+  let html='<div class="blockcard" id="block_'+n+'">';
+  html+='<div class="blockhead"><h3>Timeline '+n+'</h3>'+(n>1?'<button class="btn g sm" data-rm="'+n+'">✕ Remove page</button>':'')+'</div>';
+  html+='<label>Own source for this page <span class="hint">(optional — leave blank to use the main link/file above)</span></label>';
+  html+='<div class="row2"><input id="url_'+n+'" placeholder="Paste a video link for this page only…"><div class="dropzone" id="filebox_'+n+'">⬆ Click or drop a file<input id="file_'+n+'" type="file" accept="video/*"></div></div>';
+  if(!isLong){
+    html+='<div class="row"><div><label>Number of clips <span class="hint">(max '+maxCount+' at once — keeps the free backend stable)</span></label><select id="count_'+n+'">'+countOpts.map(c=>'<option'+(c===Math.min(4,maxCount)?' selected':'')+'>'+c+'</option>').join('')+'</select></div>'
+     +'<div><label>Category mode</label><select id="mix_'+n+'"><option value="single">One category per clip</option><option value="mixed">Mixed categories per clip</option></select></div></div>';
+    html+='<label>Vertical shape</label>'+aspectHTML(n);
+    html+='<label style="margin-top:14px">Clip length range</label><div class="presetrow" id="presets_'+n+'"></div>';
+  }else{
+    html+='<div class="row"><div><label>Category mode</label><select id="mix_'+n+'"><option value="single">One category per clip</option><option value="mixed">Mixed categories per clip</option></select></div></div>';
+    html+='<label>Video length range <span class="hint">(5–45 min)</span></label><div class="presetrow" id="presets_'+n+'"></div>';
+  }
+  html+='<input type="hidden" id="minlen_'+n+'"><input type="hidden" id="maxlen_'+n+'">';
+  html+='<label>Category cluster</label><details class="cluster" open><summary>Select categories <small id="catSummary_'+n+'">Auto</small></summary><div class="clusterbody" id="cats_'+n+'">'+cats.map(c=>'<span class="chip" data-c="'+c+'">'+c+'</span>').join('')+'</div></details>';
+  html+='<label>Trim timeline (optional)</label><div class="trim" id="trimS_'+n+'"><div class="fill" id="fillS_'+n+'"></div><input type="range" id="r0_'+n+'" min="0" max="100" step="0.1" value="0"><input type="range" id="r1_'+n+'" min="0" max="100" step="0.1" value="100"></div>';
+  html+='<div class="hint">Drag the handles after loading a video/link preview above to limit the source range.</div>';
+  html+='<button class="btn" id="run_'+n+'" style="margin-top:16px">Generate Clips</button><div class="hint" id="prog_'+n+'"></div>';
+  html+='<div style="margin-top:16px"><h2 style="font-size:12px;color:var(--teal);text-transform:uppercase;letter-spacing:1px;margin-bottom:12px">Results — Timeline '+n+'</h2><div class="grid" id="res_'+n+'"></div></div>';
+  html+='</div>';
+  return html;
+}
+function wireBlock(n){
+  $$('#cats_'+n+' .chip').forEach(c=>c.onclick=()=>{c.classList.toggle('on');updateCatSummary(n)});
+  dropzone('#filebox_'+n,'#file_'+n);
+  ['#r0_'+n,'#r1_'+n].forEach(id=>$(id).oninput=()=>syncTrim('#r0_'+n,'#r1_'+n,'#fillS_'+n,$('#prev')));
   const pr=PRESETS[kind];
-  $('#minlen').value=pr[0][0];$('#maxlen').value=pr[kind==='short'?1:2][1]||pr[1][1];
-  $('#vert').value=kind==='short'?'true':'false';
-  $('#vert').parentElement.style.display=kind==='short'?'block':'none';
-  $('#presets').innerHTML=pr.map(p=>'<span class="preset" data-a="'+p[0]+'" data-b="'+p[1]+'">'+fmt(p[0])+'–'+fmt(p[1])+'</span>').join('');
-  $$('#presets .preset').forEach(p=>p.onclick=()=>{$('#minlen').value=p.dataset.a;$('#maxlen').value=p.dataset.b;$$('#presets .preset').forEach(x=>x.classList.toggle('on',x===p))});
+  $('#presets_'+n).innerHTML=pr.map((p,i)=>'<span class="preset'+(i===0?' on':'')+'" data-a="'+p[0]+'" data-b="'+p[1]+'">'+fmt(p[0])+'–'+fmt(p[1])+'</span>').join('');
+  $('#minlen_'+n).value=pr[0][0];$('#maxlen_'+n).value=pr[0][1];
+  $$('#presets_'+n+' .preset').forEach(p=>p.onclick=()=>{$('#minlen_'+n).value=p.dataset.a;$('#maxlen_'+n).value=p.dataset.b;$$('#presets_'+n+' .preset').forEach(x=>x.classList.toggle('on',x===p))});
+  if(kind==='short'){
+    $$('#aspect_'+n+' .aspect').forEach((a,i)=>{if(i===0)a.classList.add('on');a.onclick=()=>{$$('#aspect_'+n+' .aspect').forEach(x=>x.classList.toggle('on',x===a))}});
+  }
+  $('#run_'+n).onclick=()=>generateBlock(n);
+  const rm=document.querySelector('[data-rm="'+n+'"]');if(rm)rm.onclick=()=>{blocks=blocks.filter(x=>x!==n);renderBlocks()};
 }
-function updateCatSummary(){const sel=$$('#cats .chip.on').map(c=>c.dataset.c);$('#catSummary').textContent=sel.length?sel.length+' selected: '+sel.join(', '):'Auto (AI picks best moments)'}
+function updateCatSummary(n){const sel=$$('#cats_'+n+' .chip.on').map(c=>c.dataset.c);$('#catSummary_'+n).textContent=sel.length?sel.length+' selected: '+sel.join(', '):'Auto (AI picks best moments)'}
+function renderBlocks(){$('#blocksWrap').innerHTML=blocks.map(n=>blockHTML(n)).join('');blocks.forEach(n=>wireBlock(n))}
 function initTrim(mediaEl,r0,r1,fill){const d=mediaEl.duration||100;$(r0).max=$(r1).max=d;$(r0).value=0;$(r1).value=d;syncTrim(r0,r1,fill,mediaEl)}
 function syncTrim(r0,r1,fill,mediaEl){
   let a=+$(r0).value,b=+$(r1).value;if(a>b){[a,b]=[b,a]}
@@ -370,27 +525,34 @@ function syncTrim(r0,r1,fill,mediaEl){
 }
 
 /* ---------- CLIP EXTRACTOR ---------- */
-async function runClips(){
-  const f=$('#file').files[0],u=$('#url').value.trim();
-  if(!f&&!u)return say('Paste a link or upload a video file first');
+async function generateBlock(n){
+  const ownUrl=($('#url_'+n)&&$('#url_'+n).value.trim())||'';
+  const ownFile=$('#file_'+n)&&$('#file_'+n).files[0];
+  const f=ownFile||$('#file').files[0];
+  const u=ownUrl||$('#url').value.trim();
+  if(!f&&!u)return say('Paste a link or upload a video file first — either above, or just for this page');
   const fd=new FormData();if(f)fd.append('file',f);else fd.append('url',u);
-  const cats=$$('#cats .chip.on').map(c=>c.dataset.c);
-  const avg=(+$('#minlen').value+ +$('#maxlen').value)/2;
-  fd.append('kind',kind);fd.append('count',$('#count').value);fd.append('target',avg);
-  fd.append('min_len',$('#minlen').value);fd.append('max_len',$('#maxlen').value);
-  fd.append('cats',cats.join(',')||'Auto');fd.append('mix',$('#mix').value);fd.append('vertical',$('#vert').value);
-  fd.append('t0',$('#r0').value||0);fd.append('t1',(+$('#r1').value===+$('#r1').max)?0:$('#r1').value);
-  $('#res').innerHTML='';$('#run').disabled=true;$('#go').disabled=true;
+  const cats=$$('#cats_'+n+' .chip.on').map(c=>c.dataset.c);
+  const minlen=$('#minlen_'+n).value,maxlen=$('#maxlen_'+n).value;
+  const avg=(+minlen+ +maxlen)/2;
+  const count=kind==='short'?$('#count_'+n).value:1;
+  let vert='false';
+  if(kind==='short'){const sel=document.querySelector('#aspect_'+n+' .aspect.on');vert=(sel&&sel.dataset.k==='916')?'true':'false'}
+  fd.append('kind',kind);fd.append('count',count);fd.append('target',avg);
+  fd.append('min_len',minlen);fd.append('max_len',maxlen);
+  fd.append('cats',cats.join(',')||'Auto');fd.append('mix',$('#mix_'+n).value);fd.append('vertical',vert);
+  fd.append('t0',$('#r0_'+n).value||0);fd.append('t1',(+$('#r1_'+n).value===+$('#r1_'+n).max)?0:$('#r1_'+n).value);
+  $('#res_'+n).innerHTML='';$('#run_'+n).disabled=true;
   try{
     const r=await api('/api/clips',{method:'POST',body:fd});
     for(;;){
-      const j=await api('/api/jobs/'+r.job);$('#prog').textContent=j.msg+(j.total?' ('+j.clips.length+'/'+j.total+')':'');
-      show(j.clips,'#res');
+      const j=await api('/api/jobs/'+r.job);$('#prog_'+n).textContent=j.msg+(j.total?' ('+j.clips.length+'/'+j.total+')':'');
+      show(j.clips,'#res_'+n);
       if(j.status==='error')throw new Error(j.msg);
-      if(j.status==='done'){saveHist({t:Date.now(),kind:'Clip Extractor ('+kind+')',src:f?f.name:u,clips:j.clips});say('Done — '+j.clips.length+' clip(s) ready',true);break}
+      if(j.status==='done'){saveHist({t:Date.now(),kind:'Clip Extractor ('+kind+', page '+n+')',src:f?f.name:u,clips:j.clips});say('Timeline '+n+' done — '+j.clips.length+' clip(s) ready',true);break}
       await new Promise(x=>setTimeout(x,3000));
     }
-  }catch(e){say(e.message)}finally{$('#run').disabled=false;$('#go').disabled=false}
+  }catch(e){say(e.message)}finally{$('#run_'+n).disabled=false}
 }
 function show(cl,t){
   t=t||'#res';
@@ -408,14 +570,19 @@ function renderTool(v){
   const t=TOOLS[v];$('#gT').textContent=t.t;$('#gSub').textContent=t.sub;$('#gres').innerHTML='';$('#gprog').textContent='';
   $('#gF').innerHTML=(t.file?'<label>Video file'+(v==='edit'&&window.editSrc?' <span class="hint">(leave empty to reuse the last generated clip)</span>':'')+'</label><input id="gfile" type="file" accept="video/*">':'')
    +t.f.map(x=>{const id='g_'+x[0];let i;
-    if(x[1]==='select')i='<select id="'+id+'">'+x[3].map(o=>'<option>'+o+'</option>').join('')+'</select>';
+    if(x[1]==='select')i='<select id="'+id+'">'+x[3].map(o=>{const parts=String(o).split('|');const val=parts[0],lab=parts.length>1?parts[1]:parts[0];return '<option value="'+esc(val)+'">'+esc(lab)+'</option>'}).join('')+'</select>';
     else if(x[1]==='textarea')i='<textarea id="'+id+'" rows="4"></textarea>';
-    else if(x[1]==='check')return '<label style="display:flex;align-items:center;gap:8px;font-weight:400"><input id="'+id+'" type="checkbox" style="width:auto"> '+x[2]+'</label>';
+    else if(x[1]==='check')return '<div id="fw_'+x[0]+'"><label style="display:flex;align-items:center;gap:8px;font-weight:400"><input id="'+id+'" type="checkbox" style="width:auto"> '+x[2]+'</label></div>';
     else i='<input id="'+id+'" type="'+x[1]+'" value="'+esc(x[3])+'">';
-    return '<label>'+x[2]+'</label>'+i}).join('')
+    return '<div id="fw_'+x[0]+'"><label>'+x[2]+'</label>'+i+'</div>'}).join('')
+   +(t.hint?'<div class="hint">'+t.hint+'</div>':'')
    +'<div style="display:flex;gap:10px;margin-top:14px;flex-wrap:wrap"><button class="btn" id="gGo">Run</button>'
    +(v==='edit'?'<button class="btn teal" id="gAi">✨ AI Regenerate Voiceover</button>':'')+'</div>';
   const pv=$('#gprev');pv.style.display='none';$('#tlw').style.display=t.tl?'block':'none';
+  if(v==='expand'){
+    const toggleExpandFields=()=>{const m=$('#g_mode').value;$('#fw_ratio').style.display=m==='ratio'?'block':'none';$('#fw_seconds').style.display=m==='extend'?'block':'none'};
+    $('#g_mode').onchange=toggleExpandFields;toggleExpandFields();
+  }
   if(v==='edit'&&window.vFile)$('#g_voice').value=window.vFile;
   const setSrc=u=>{pv.src=u;pv.style.display='block'};
   if(v==='edit'&&window.editSrc)setSrc(base()+window.editSrc);
@@ -452,7 +619,7 @@ function renderTool(v){
 function voiceBox(p){const o=a=>a.map(c=>'<option>'+c+'</option>').join('');
   return '<div class="row"><div><label>Category (style)</label><select id="'+p+'cat">'+o(CATS)+'</select></div>'
    +'<div><label>Gender</label><select id="'+p+'g">'+o(['Female','Male'])+'</select></div>'
-   +'<div><label>Age</label><select id="'+p+'age">'+o(['Child','Teen','Adult','Senior']).replace('<option>Adult','<option selected>Adult')+'</select></div>'
+   +'<div><label>Age <span class="hint">('+AGE_HINT+')</span></label><select id="'+p+'age">'+o(['Child','Teen','Adult','Senior']).replace('<option>Adult','<option selected>Adult')+'</select></div>'
    +'<div><label>Voice language <span class="hint">(independent of region)</span></label><select id="'+p+'lang"><option value="">Match region (default)</option></select></div>'
    +'<div><label>Voice</label><select id="'+p+'v"></select></div></div>'
    +'<label>Script</label><textarea id="'+p+'tx" rows="5" placeholder="Write a script, or generate one with AI"></textarea>'
@@ -489,12 +656,103 @@ function sfxBoxHTML(){return '<div class="row"><input id="sq" placeholder="whoos
 async function sfxGo(){try{say('Searching…');const r=await api('/api/sfx?q='+encodeURIComponent($('#sq').value)+'&kind='+$('#sk').value);
   $('#sres').innerHTML=r.map(x=>'<div class="gitem"><div class="body"><b>'+esc(x.name)+'</b><div class="badges"><span class="badge teal">'+Math.round(x.duration)+'s</span><span class="badge">'+esc(x.license)+'</span></div><audio controls preload="none" src="'+esc(x.preview)+'"></audio><div class="actions"><a target="_blank" rel="noopener" href="https://freesound.org/s/'+x.id+'/">Open on Freesound</a></div></div></div>').join('')||'<div class="hint">No results</div>';say('')}catch(e){say(e.message)}}
 
+/* ---------- PICTURE STUDIO ---------- */
+const IMG_TABS=[['gen','AI Generate'],['edit','AI Edit / Change'],['man','Manual Edit']];
+let imgTab='gen';
+function buildImage(){
+  $('#imgTabs').innerHTML=IMG_TABS.map(t=>'<div class="toolpill'+(t[0]===imgTab?' on':'')+'" data-t="'+t[0]+'"><span>'+t[1]+'</span></div>').join('');
+  $$('#imgTabs .toolpill').forEach(p=>p.onclick=()=>{imgTab=p.dataset.t;showImgTab()});
+  $('#igCat').innerHTML=IMG_STYLES.map(c=>'<option>'+c+'</option>').join('');
+  $('#igGo').onclick=doImgGen;
+  dropzone('#ieZone','#ieFile');
+  $('#ieGo').onclick=doImgEdit;
+  dropzone('#imZone','#imFile');
+  wireManualEdit();
+  showImgTab();
+}
+function showImgTab(){
+  $$('#imgTabs .toolpill').forEach(p=>p.classList.toggle('on',p.dataset.t===imgTab));
+  $('#imgGenCard').style.display=imgTab==='gen'?'block':'none';
+  $('#imgEditCard').style.display=imgTab==='edit'?'block':'none';
+  $('#imgManCard').style.display=imgTab==='man'?'block':'none';
+}
+function doImgGen(){
+  const prompt=($('#igPrompt').value||'').trim();if(!prompt)return say('Describe the image you want first');
+  const [w,h]=$('#igRatio').value.split(',');
+  const full=encodeURIComponent(prompt+', '+$('#igCat').value+' style');
+  const url='https://image.pollinations.ai/prompt/'+full+'?width='+w+'&height='+h+'&nologo=true&seed='+Date.now();
+  $('#igOut').innerHTML='<img src="'+url+'" style="max-width:100%;border-radius:12px" alt=""><div class="hint" style="margin-top:8px"><a target="_blank" rel="noopener" href="'+url+'" style="color:var(--teal)">Open full size / download</a></div>';
+  say('');
+}
+function doImgEdit(){
+  const prompt=($('#iePrompt').value||'').trim();if(!prompt)return say('Describe the change you want first');
+  const f=$('#ieFile').files[0];
+  const full=encodeURIComponent((f?'based on the uploaded reference image, ':'')+prompt);
+  const url='https://image.pollinations.ai/prompt/'+full+'?width=1024&height=1024&nologo=true&seed='+Date.now();
+  $('#ieOut').innerHTML='<img src="'+url+'" style="max-width:100%;border-radius:12px" alt=""><div class="hint" style="margin-top:8px"><a target="_blank" rel="noopener" href="'+url+'" style="color:var(--teal)">Open full size / download</a></div>';
+  say('');
+}
+function wireManualEdit(){
+  const cv=$('#edCanvas');let img=new Image(),rot=0,flip=1;
+  $('#imFile').onchange=e=>{const f=e.target.files[0];if(!f)return;img=new Image();img.onload=()=>{rot=0;flip=1;draw()};img.src=URL.createObjectURL(f)};
+  function draw(){
+    if(!img.width)return;
+    const sw=rot%180===0?img.width:img.height, sh=rot%180===0?img.height:img.width;
+    cv.width=sw;cv.height=sh;
+    const ctx=cv.getContext('2d');ctx.save();ctx.clearRect(0,0,cv.width,cv.height);
+    ctx.translate(cv.width/2,cv.height/2);ctx.rotate(rot*Math.PI/180);ctx.scale(flip,1);
+    ctx.filter='brightness('+$('#imBright').value+'%) contrast('+$('#imContrast').value+'%)';
+    ctx.drawImage(img,-img.width/2,-img.height/2);
+    ctx.restore();
+    const txt=$('#imText').value.trim();
+    if(txt){ctx.font='bold '+Math.round(cv.width/14)+'px sans-serif';ctx.fillStyle='#fff';ctx.strokeStyle='#000';ctx.lineWidth=4;ctx.textAlign='center';
+      ctx.strokeText(txt,cv.width/2,cv.height-24);ctx.fillText(txt,cv.width/2,cv.height-24)}
+    $('#imDl').href=cv.toDataURL('image/png');
+  }
+  $('#imRotL').onclick=()=>{rot=(rot-90+360)%360;draw()};
+  $('#imRotR').onclick=()=>{rot=(rot+90)%360;draw()};
+  $('#imFlip').onclick=()=>{flip*=-1;draw()};
+  $('#imBright').oninput=()=>{$('#imBrightV').textContent=$('#imBright').value+'%';draw()};
+  $('#imContrast').oninput=()=>{$('#imContrastV').textContent=$('#imContrast').value+'%';draw()};
+  $('#imText').oninput=draw;
+  $('#imApply').onclick=draw;
+}
+
 /* ---------- SCRIPT / REVERSE ---------- */
 async function doRegen(){try{say('Thinking…');const r=await post('/api/script',{topic:$('#rg').value,category:'Commentary',region});$('#rgOut').innerHTML='<h3>'+esc(r.title)+'</h3><pre>'+esc(r.script)+'</pre><div class="hint">'+esc((r.hashtags||[]).join(' '))+'</div>';say('')}catch(e){say(e.message)}}
 async function doRegenTranslate(){const tgt=$('#rgtl').value;if(!tgt)return say('Choose a target language first');try{say('Translating…');const r=await post('/api/translate',{text:$('#rg').value,target:tgt});$('#rg').value=r.text||'';say('Translated',true)}catch(e){say(e.message)}}
-async function doRev(){try{say('Analyzing channel…');const r=await post('/api/reverse',{url:$('#rv').value.trim(),region});$('#rvOut').innerHTML='<pre>'+esc(JSON.stringify(r,null,2))+'</pre>';say('')}catch(e){say(e.message)}}
+function revList(a){return (a&&a.length)?'<ul style="margin:4px 0 0 18px;padding:0">'+a.map(x=>'<li>'+esc(typeof x==='string'?x:JSON.stringify(x))+'</li>').join('')+'</ul>':'<span class="hint">—</span>'}
+function revBlock(t,h){return '<div class="card" style="margin-top:12px"><h2>'+t+'</h2>'+h+'</div>'}
+function renderRev(r){
+  const ta=r.target_audience||{},vg=r.videography||{},vo=r.voice||{},mu=r.music||{};
+  let h=revBlock('Overview','<div><b>Platform:</b> '+esc(r.platform)+' &nbsp; <b>Niche:</b> '+esc(r.niche)+' &nbsp; <b>Language:</b> '+esc(r.language)+'</div>')
+   +revBlock('Target audience','<div><b>Age:</b> '+esc(ta.age_range)+' &nbsp; <b>Gender:</b> '+esc(ta.gender_split)+'</div><div><b>Regions:</b> '+esc((ta.regions||[]).join(', '))+'</div><div><b>Interests:</b> '+esc((ta.interests||[]).join(', '))+'</div>')
+   +revBlock('Top topics','<div>'+revList(r.top_topics)+'</div>')
+   +revBlock('High-view videos','<div>'+revList((r.high_view_videos||[]).map(v=>(v.title||'')+' — '+Number(v.views||0).toLocaleString()+' views — '+(v.why||'')))+'</div>')
+   +revBlock('Titles & hashtags','<b>Title formula</b>'+revList(r.title_formula)+'<div style="margin-top:8px"><b>Hashtags:</b> '+esc((r.hashtags||[]).join(' '))+'</div>')
+   +revBlock('Videography, voice & music (inferred from text)','<div><b>Format:</b> '+esc(vg.format)+'</div><div><b>Editing:</b> '+esc(vg.editing_style)+'</div><div><b>Visuals:</b> '+esc(vg.visuals)+'</div><div><b>Thumbnails:</b> '+esc(vg.thumbnail_style)+'</div><div style="margin-top:6px"><b>Voice:</b> '+esc(vo.style)+' · '+esc(vo.language_or_accent)+'</div><div><b>Music:</b> '+esc(mu.style)+' · '+esc(mu.mood)+'</div>')
+   +revBlock('Why it works / weaknesses','<b>Works</b>'+revList(r.why_it_works)+'<div style="margin-top:8px"><b>Weaknesses</b></div>'+revList(r.weaknesses))
+   +revBlock('New title ideas','<div>'+revList(r.new_titles)+'</div>')
+   +revBlock('New script','<pre>'+esc(r.new_script)+'</pre>');
+  $('#rvOut').innerHTML=h;
+}
+async function doRev(){
+  const u=$('#rv').value.trim(),f=$('#rvFile').files[0];
+  if(!u&&!f)return say('Paste a channel/video link or upload a video file first');
+  try{
+    say('Analyzing… (this can take a minute)');let r;
+    if(f&&!u){const fd=new FormData();fd.append('file',f);fd.append('region',region);r=await api('/api/reverse_file',{method:'POST',body:fd})}
+    else r=await post('/api/reverse',{url:u,region});
+    renderRev(r);say('Analysis ready',true);
+  }catch(e){say(e.message)}
+}
 
 /* ---------- TRENDS ---------- */
+function buildTrendRegion(){
+  if(!$('#tnRegion').options.length)$('#tnRegion').innerHTML=Object.keys(REG).map(r=>'<option'+(r===region?' selected':'')+'>'+r+'</option>').join('');
+  else $('#tnRegion').value=region;
+  $('#tnRegion').onchange=e=>{region=e.target.value;W('region',region);trends()};
+}
 async function trends(){
   const k=S('yt','');if(!k){$('#tnOut').innerHTML='';return say('Add a YouTube Data API key in Settings to see trends')}
   const c=YT[$('#tn').value];say('');
@@ -521,23 +779,24 @@ function loadJs(u){return new Promise((ok,no)=>{const s=document.createElement('
 async function initAuth(){
   const u=S('sbu',''),k=S('sbk','');if(!u||!k)return;
   try{if(!window.supabase)await loadJs('https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js');
-  sb=window.supabase.createClient(u,k);const d=await sb.auth.getSession();user=d.data.session?d.data.session.user:null;$('#who').textContent=user?user.email:'Guest'}catch(e){say('Could not connect to Supabase')}
+  sb=window.supabase.createClient(u,k);const d=await sb.auth.getSession();user=d.data.session?d.data.session.user:null;$('#who').textContent=user?user.email:'Guest';if($('#acctChip'))$('#acctChip').textContent='👤 '+(user?user.email:'Guest')}catch(e){say('Could not connect to Supabase')}
 }
 async function login(){if(!sb)return say('Save your Supabase URL/key in Settings first');const r=await sb.auth.signInWithOtp({email:$('#em').value.trim(),options:{emailRedirectTo:location.href}});say(r.error?r.error.message:'Login link sent to your email',!r.error)}
-async function logout(){if(sb)await sb.auth.signOut();user=null;$('#who').textContent='Guest';loadSet()}
+async function logout(){if(sb)await sb.auth.signOut();user=null;$('#who').textContent='Guest';if($('#acctChip'))$('#acctChip').textContent='👤 Guest';loadSet()}
 async function ping(){try{const r=await api('/health');$('#dot').className='dot on';$('#st').textContent='Backend online'+(r.groq?'':' (no Groq key: basic mode)')}catch(e){$('#dot').className='dot off';$('#st').textContent='Backend offline'}}
 
 function init(){
   buildNav();buildStudio();
   $('#mk').innerHTML=voiceBox('m');wireVoice('m');
   $('#sfxbox').innerHTML=sfxBoxHTML();$('#sgo').onclick=sfxGo;
-  function music(){}
   $('#tn').innerHTML=Object.keys(YT).map(k=>'<option>'+k+'</option>').join('');
   $('#rgGo').onclick=doRegen;$('#rgtr').onclick=doRegenTranslate;$('#rvGo').onclick=doRev;$('#tnGo').onclick=trends;
+  $('#rvToggleUpload').onclick=()=>{const z=$('#rvZone');z.style.display=z.style.display==='none'||!z.style.display?'block':'none'};
+  dropzone('#rvZone','#rvFile');
   fillLangs('rg');
   $('#sSave').onclick=saveSet;$('#login').onclick=login;$('#logout').onclick=logout;
   $('#wipe').onclick=()=>{try{localStorage.clear()}catch(e){}say('Local data cleared',true)};
-  go('studio');ping();initAuth();
+  go('home');ping();initAuth();
 }
 init();
 </script></body></html>
